@@ -13,7 +13,7 @@
 - 赛道：学术龙虾赛道
 - 比赛：北纬·龙虾大赛（第一届）· OpenClaw Hackathon
 - 主办方：中关村人工智能研究院
-- GitHub 仓库：https://github.com/happytianhao/PanelClaw
+- GitHub 仓库：https://github.com/happytianhao/PanelClaw/
 - 参赛者：赵天浩 · 北京中关村学院 · zthwhucs@gmail.com
 
 ---
@@ -58,7 +58,7 @@
 ### 秘书
 
 - 身份：AI Panel 秘书（无需简历）
-- 职责：会后生成结构化总结报告，输出到 `data/reports/`
+- 职责：会后生成结构化总结报告，输出到 `docs/data/report.json`
 - speaker_id: `secretary`
 
 ---
@@ -95,7 +95,7 @@ Panel 共设 4 个核心问题，每题发言顺序固定。
 
 ## 数据结构
 
-### `data/speakers.json`
+### `docs/data/speakers.json`
 
 存储所有嘉宾的基本信息，供前端渲染头像、姓名、标签。
 
@@ -127,7 +127,7 @@ Panel 共设 4 个核心问题，每题发言顺序固定。
 | language | string | 发言语言，`zh` 或 `en` |
 | color | string | 该嘉宾的主题色（用于打字机动画高亮） |
 
-### `data/panel_script.json`
+### `docs/data/panel_script.json`
 
 存储完整的 Panel 对话脚本，按发言顺序排列。
 
@@ -164,15 +164,12 @@ Panel 共设 4 个核心问题，每题发言顺序固定。
 | text | string | 发言正文 |
 | duration_estimate | number | 预估打字机播放时长（秒） |
 
-### `data/reports/`
+### `docs/data/report.json`
 
-存储 AI 秘书生成的总结报告，每次生成一个 JSON 文件。
-
-文件命名：`report_YYYYMMDD_HHMMSS.json`
+存储 AI 秘书生成的总结报告，一个 Panel 对应一个文件。
 
 ```json
 {
-  "report_id": "report_20260319_120000",
   "generated_at": "2026-03-19T12:00:00Z",
   "panel_title": "Panel Discussion - 科研是需要龙虾还是牛马？",
   "summary": "...",
@@ -198,9 +195,9 @@ Panel 共设 4 个核心问题，每题发言顺序固定。
 
 ### 内容生成阶段
 
-1. 生成 `data/speakers.json`：填写所有嘉宾信息
-2. 生成 `data/panel_script.json`：按议程顺序逐段生成对话脚本
-3. 生成 `data/reports/report_*.json`：由 AI 秘书角色总结全场内容
+1. 生成 `docs/data/speakers.json`：填写所有嘉宾信息
+2. 生成 `docs/data/panel_script.json`：按议程顺序逐段生成对话脚本
+3. 生成 `docs/data/report.json`：由 AI 秘书角色总结全场内容
 4. 验证 JSON 格式，确保所有 speaker_id 引用一致
 
 ### Prompt 设计原则
@@ -223,13 +220,14 @@ PanelClaw/
 ├── CLAUDE.md               # AI 助手工作手册（本文件）
 ├── LICENSE                 # MIT License
 ├── .gitignore
-├── data/
-│   ├── speakers.json       # 嘉宾信息
-│   ├── panel_script.json   # Panel 对话脚本
-│   └── reports/            # AI 秘书总结报告
-│       └── report_*.json
 └── docs/                   # GitHub Pages 静态网站
     ├── index.html          # 主页面（打字机播放器）
+    ├── data/
+    │   ├── speakers.json       # 嘉宾信息
+    │   ├── panel_script.json   # Panel 对话脚本
+    │   └── report.json         # AI 秘书总结报告
+    ├── assets/
+    │   └── avatars/            # 嘉宾头像
     ├── plans/              # 项目规划文档
     ├── report/             # 报告展示页
     ├── poster/             # 海报文件
@@ -242,9 +240,9 @@ PanelClaw/
 
 ## 待完成清单
 
-- [ ] 创建 `data/speakers.json`（6 位嘉宾 + 秘书）
-- [ ] 生成 `data/panel_script.json`（4 个问题，完整对话）
-- [ ] 生成 `data/reports/report_*.json`（AI 秘书总结）
+- [ ] 创建 `docs/data/speakers.json`（6 位嘉宾 + 秘书）
+- [ ] 生成 `docs/data/panel_script.json`（4 个问题，完整对话）
+- [ ] 生成 `docs/data/report.json`（AI 秘书总结）
 - [ ] 创建 `docs/index.html`（打字机播放器主页面）
 - [ ] 添加嘉宾头像资源到 `docs/assets/avatars/`
 - [ ] 实现进度条拖拽跳转功能
@@ -269,7 +267,7 @@ PanelClaw/
 
 ### 跨文档一致性原则
 
-- `speaker_id` 必须在 `speakers.json`、`panel_script.json`、`reports/` 中保持完全一致
+- `speaker_id` 必须在 `speakers.json`、`panel_script.json`、`report.json` 中保持完全一致
 - 嘉宾姓名、职位描述在所有文件中保持统一，以本文件为准
 - Panel 议程顺序以本文件"Panel 议程"章节为准，生成脚本时严格遵守
 
@@ -283,11 +281,11 @@ PanelClaw/
 
 - 先生成 `speakers.json`，再生成 `panel_script.json`，顺序不可颠倒
 - 每个 segment 生成后立即验证 speaker_id 是否存在于 speakers.json
-- 报告生成必须在脚本生成完成后进行
+- `report.json` 生成必须在脚本生成完成后进行
 
 ### 前端开发时
 
-- `docs/index.html` 通过 `fetch('../data/panel_script.json')` 读取数据
+- `docs/index.html` 通过 `fetch('data/panel_script.json')` 读取数据
 - 打字机动画速度：默认 50ms/字，可通过 URL 参数 `?speed=fast/slow` 调整
 - 进度控制基于 segment_id，拖拽时跳转到对应 segment 的起始位置
 - 全展开模式：一次性渲染所有 text 字段，不播放动画
