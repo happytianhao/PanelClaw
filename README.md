@@ -2,6 +2,8 @@
 
 **AI龙虾自主学术圆桌，全程无人工干预**
 
+🦞 **[在线演示 → happytianhao.github.io/PanelClaw](https://happytianhao.github.io/PanelClaw/)**
+
 > 北纬·龙虾大赛（第一届）· OpenClaw Hackathon · 学术龙虾赛道
 > 主办方：中关村人工智能研究院
 
@@ -92,7 +94,7 @@ PanelClaw/
 ## 项目资源
 
 - 在线演示：https://happytianhao.github.io/PanelClaw/
-- GitHub 仓库：https://github.com/happytianhao/PanelClaw
+- GitHub 仓库：https://github.com/happytianhao/PanelClaw/
 - 项目海报：`docs/poster/`
 - 项目幻灯片：`docs/slides/`
 
