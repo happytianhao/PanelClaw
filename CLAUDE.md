@@ -32,7 +32,7 @@
 - 职位：Stanford 大学教授，HAI（以人为本人工智能研究所）联合院长，World Labs 联合创始人
 - 研究方向：计算机视觉、AI for Science、具身智能
 - 发言风格：宏观视野，强调人文关怀与 AI 伦理，中文发言
-- speaker_id: `lifei`
+- speaker_id: `lifeifei`
 
 ### 嘉宾 2：何恺明
 

@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PanelClaw · 科研是需要龙虾还是牛马？</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep:       #050a18;
+      --bg-surface:    #0c1428;
+      --bg-card:       #111d3a;
+      --bg-card-hover: #162040;
+      --border-subtle: rgba(100, 150, 255, 0.07);
+      --border-glow:   rgba(100, 150, 255, 0.18);
+      --text-primary:  #e8edf5;
+      --text-secondary:#7a8ba8;
+      --text-muted:    #4a5a72;
+      --col-host:      #64b5f6;
+      --col-lifei:     #f48fb1;
+      --col-kaiming:   #a5d6a7;
+      --col-sam:       #ffe082;
+      --col-lobster:   #ff8a65;
+      --col-secretary: #b39ddb;
+      --rad-sm:  6px;
+      --rad-md:  12px;
+      --rad-lg:  20px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.75;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 38% at 18% 8%,  rgba(100,181,246,0.05) 0%, transparent 65%),
+        radial-gradient(ellipse 45% 42% at 82% 85%, rgba(244,143,177,0.04) 0%, transparent 65%),
+        radial-gradient(ellipse 38% 28% at 50% 50%, rgba(179,157,219,0.025) 0%, transparent 75%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.6;
+    }
+    .app {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 20px 130px;
+    }
+    /* ── HEADER ── */
+    .panel-header { padding: 52px 0 36px; text-align: center; }
+    .panel-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+    .panel-eyebrow::before, .panel-eyebrow::after {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--text-muted);
+      opacity: 0.4;
+    }
+    .panel-title {
+      font-family: 'Playfair Display', 'Noto Serif SC', serif;
+      font-size: clamp(22px, 5vw, 38px);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.3px;
+      margin-bottom: 14px;
+      line-height: 1.25;
+    }
+    .panel-subtitle {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      font-weight: 400;
+      letter-spacing: 0.3px;
+    }
+    .panel-meta {
+      margin-top: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+    .panel-meta-sep {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      opacity: 0.5;
+    }
+    /* ── SPEAKER STRIP ── */
+    .speaker-strip {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 18px 0 10px;
+      flex-wrap: wrap;
+    }
+    .speaker-chip {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      user-select: none;
+    }
+    .speaker-chip:hover { transform: translateY(-2px); }
+    .speaker-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      border: 1.5px solid transparent;
+      background: var(--bg-card);
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+    .speaker-chip.active .speaker-avatar { transform: scale(1.18); }
+    .speaker-chip.active .speaker-chip-label { color: var(--text-secondary); }
+    .speaker-chip[data-id="zhengshuxin"].active .speaker-avatar { border-color: var(--col-host);     box-shadow: 0 0 18px rgba(100,181,246,0.35); }
+    .speaker-chip[data-id="lifeifei"].active   .speaker-avatar { border-color: var(--col-lifei);    box-shadow: 0 0 18px rgba(244,143,177,0.35); }
+    .speaker-chip[data-id="hekaiming"].active  .speaker-avatar { border-color: var(--col-kaiming);   box-shadow: 0 0 18px rgba(165,214,167,0.35); }
+    .speaker-chip[data-id="samaltman"].active  .speaker-avatar { border-color: var(--col-sam);       box-shadow: 0 0 18px rgba(255,224,130,0.35); }
+    .speaker-chip[data-id="openclaw"].active   .speaker-avatar { border-color: var(--col-lobster);   box-shadow: 0 0 18px rgba(255,138,101,0.35); }
+    .speaker-chip-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      letter-spacing: 0.4px;
+      transition: color 0.3s;
+      white-space: nowrap;
+    }
+    /* ── CONVERSATION ── */
+    .conversation-area { position: relative; }
+    .q-divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 36px 0 22px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .q-divider.visible { opacity: 1; transform: translateY(0); }
+    .q-divider::before, .q-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border-glow), transparent);
+    }
+    .q-divider-inner { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; }
+    .q-divider-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .q-divider-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-style: italic;
+      text-align: center;
+      max-width: 380px;
+      line-height: 1.4;
+    }
+    .msg-block {
+      margin-bottom: 14px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .msg-block.visible { opacity: 1; transform: translateY(0); }
+    .msg-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .msg-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+      background: var(--bg-card);
+      border: 1px solid transparent;
+    }
+    .msg-info { display: flex; flex-direction: column; gap: 2px; }
+    .msg-name  { font-size: 12.5px; font-weight: 600; line-height: 1; }
+    .msg-role  { font-size: 10px; color: var(--text-muted); line-height: 1; }
+    .msg-body {
+      padding: 14px 18px;
+      border-radius: var(--rad-md);
+      font-size: 14.5px;
+      line-height: 1.9;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+      border-left-width: 2.5px;
+      border-left-style: solid;
+    }
+    .msg-text { word-break: break-word; min-height: 1.5em; }
+    .msg-block.host      { --sc: var(--col-host); }
+    .msg-block.lifeifei  { --sc: var(--col-lifei); }
+    .msg-block.hekaiming { --sc: var(--col-kaiming); }
+    .msg-block.samaltman { --sc: var(--col-sam); }
+    .msg-block.openclaw  { --sc: var(--col-lobster); }
+    .msg-block.secretary { --sc: var(--col-secretary); }
+    .msg-block.host      .msg-body { border-left-color: var(--col-host); }
+    .msg-block.lifeifei  .msg-body { border-left-color: var(--col-lifei); }
+    .msg-block.hekaiming .msg-body { border-left-color: var(--col-kaiming); }
+    .msg-block.samaltman .msg-body { border-left-color: var(--col-sam); }
+    .msg-block.openclaw  .msg-body { border-left-color: var(--col-lobster); }
+    .msg-block.secretary .msg-body {
+      border-left-color: var(--col-secretary);
+      background: rgba(179,157,219,0.04);
+      border-style: dashed;
+      font-size: 13.5px;
+    }
+    .msg-block.host      .msg-name { color: var(--col-host); }
+    .msg-block.lifeifei  .msg-name { color: var(--col-lifei); }
+    .msg-block.hekaiming .msg-name { color: var(--col-kaiming); }
+    .msg-block.samaltman .msg-name { color: var(--col-sam); }
+    .msg-block.openclaw  .msg-name { color: var(--col-lobster); }
+    .msg-block.secretary .msg-name { color: var(--col-secretary); }
+    .msg-block.host      .msg-avatar { border-color: rgba(100,181,246,0.3); }
+    .msg-block.lifeifei  .msg-avatar { border-color: rgba(244,143,177,0.3); }
+    .msg-block.hekaiming .msg-avatar { border-color: rgba(165,214,167,0.3); }
+    .msg-block.samaltman .msg-avatar { border-color: rgba(255,224,130,0.3); }
+    .msg-block.openclaw  .msg-avatar { border-color: rgba(255,138,101,0.3); }
+    .msg-block.secretary .msg-avatar { border-color: rgba(179,157,219,0.3); }
+    .msg-block.samaltman .msg-body { font-family: 'Playfair Display', 'Noto Serif SC', serif; }
+    .en-tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1px;
+      padding: 1px 5px;
+      border-radius: 3px;
+      background: rgba(255,224,130,0.15);
+      border: 1px solid rgba(255,224,130,0.3);
+      color: var(--col-sam);
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .typewriter-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: var(--sc, var(--text-primary));
+      margin-left: 1px;
+      vertical-align: text-bottom;
+      animation: cursorBlink 0.8s step-end infinite;
+    }
+    @keyframes cursorBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    .panel-end { text-align: center; padding: 48px 0 20px; display: none; }
+    .panel-end.visible { display: block; opacity: 0; animation: fadeInUp 0.6s ease forwards; }
+    .panel-end-icon {
+      width: 52px;
+      height: 52px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+    .panel-end-text { font-size: 12px; color: var(--text-muted); letter-spacing: 1px; }
+    /* ── LOADING / ERROR ── */
+    .loading-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 90px 0; gap: 18px; }
+    .loading-ring {
+      width: 38px;
+      height: 38px;
+      border: 2px solid var(--border-subtle);
+      border-top-color: var(--col-host);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-size: 12.5px; color: var(--text-muted); letter-spacing: 0.5px; }
+    .error-state { text-align: center; padding: 60px 0; }
+    .error-state-icon { font-size: 28px; margin-bottom: 12px; }
+    .error-state-msg  { font-size: 13px; color: var(--text-secondary); }
+    .error-state-hint  { font-size: 11px; margin-top: 8px; opacity: 0.5; font-family: 'JetBrains Mono', monospace; }
+    /* ── CONTROLS ── */
+    .controls {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: linear-gradient(to top, var(--bg-deep) 55%, transparent);
+      padding: 0 0 12px;
+    }
+    .controls-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 14px 18px 0;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-subtle);
+      border-radius: var(--rad-lg) var(--rad-lg) 0 0;
+    }
+    .progress-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .progress-time { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-muted); min-width: 34px; flex-shrink: 0; }
+    .progress-time:last-child { text-align: right; }
+    .progress-track {
+      flex: 1;
+      height: 3px;
+      background: var(--bg-card);
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+      transition: height 0.15s ease;
+    }
+    .progress-track:hover { height: 6px; }
+    .progress-fill {
+      position: absolute;
+      left: 0; top: 0;
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(to right, rgba(100,181,246,0.7), rgba(244,143,177,0.7));
+      pointer-events: none;
+    }
+    .progress-thumb {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--text-primary);
+      box-shadow: 0 0 6px rgba(255,255,255,0.25);
+      transition: transform 0.15s, box-shadow 0.15s;
+      pointer-events: none;
+    }
+    .progress-track:hover .progress-thumb { transform: translate(-50%, -50%) scale(1.4); box-shadow: 0 0 10px rgba(255,255,255,0.4); }
+    .btn-row { display: flex; align-items: center; justify-content: center; gap: 12px; }
+    .ctrl-btn {
+      background: none;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.15s;
+      flex-shrink: 0;
+    }
+    .ctrl-btn:hover { border-color: var(--border-glow); color: var(--text-primary); background: var(--bg-card); }
+    .ctrl-btn:active { transform: scale(0.92); }
+    .ctrl-btn.primary { width: 50px; height: 50px; background: var(--bg-card); border-color: var(--border-glow); }
+    .ctrl-btn.primary:hover { background: var(--bg-card-hover); box-shadow: 0 0 14px rgba(100,181,246,0.2); }
+    .ctrl-btn svg { width: 17px; height: 17px; }
+    .ctrl-btn.primary svg { width: 20px; height: 20px; }
+    .btn-expand {
+      font-family: 'Noto Serif SC', serif;
+      font-size: 12px;
+      padding: 0 14px;
+      height: 32px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+    }
+    .btn-expand:hover { border-color: var(--border-glow); color: var(--text-primary); }
+    .btn-expand.active { background: rgba(100,181,246,0.12); border-color: rgba(100,181,246,0.3); color: var(--col-host); }
+    .btn-expand svg { width: 13px; height: 13px; flex-shrink: 0; }
+    .speed-group { display: flex; align-items: center; gap: 3px; font-size: 10px; color: var(--text-muted); }
+    .speed-btn {
+      background: none;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-size: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .speed-btn:hover { border-color: var(--border-glow); color: var(--text-secondary); }
+    .speed-btn.active { background: var(--bg-card); border-color: var(--border-glow); color: var(--text-primary); }
+    .search-anim {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      padding: 6px 0 10px;
+      opacity: 0;
+      animation: fadeInUp 0.3s ease forwards;
+    }
+    .search-anim-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--sc, var(--text-muted));
+      animation: searchPulse 1s ease-in-out infinite;
+    }
+    .search-anim-dot:nth-child(2) { animation-delay: 0.15s; }
+    .search-anim-dot:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes searchPulse { 0%,100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1.2); } }
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--bg-card); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--bg-card-hover); }
+    /* ── ANIMATIONS ── */
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .app { padding: 0 14px 130px; }
+      .panel-header { padding: 36px 0 24px; }
+      .speaker-strip { gap: 10px; }
+      .speaker-avatar { width: 36px; height: 36px; font-size: 15px; }
+      .msg-body { padding: 12px 14px; font-size: 14px; }
+      .q-divider-text { font-size: 13px; }
+      .controls-inner { padding: 12px 14px 0; }
+      .btn-row { gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="panel-header">
+    <div class="panel-eyebrow"><span>PanelClaw · 北纬龙虾大赛</span></div>
+    <h1 class="panel-title">科研是需要龙虾还是牛马？</h1>
+    <p class="panel-subtitle">AI 龙虾自主学术圆桌，全程无人工干预</p>
+    <div class="panel-meta">
+      <span>中关村人工智能研究院</span>
+      <span class="panel-meta-sep"></span>
+      <span>2026年3月19日</span>
+    </div>
+  </header>
+  <div class="speaker-strip" id="speakerStrip"></div>
+  <div class="conversation-area" id="conversationArea">
+    <div class="loading-state" id="loadingState">
+      <div class="loading-ring"></div>
+      <div class="loading-text">正在加载 Panel 脚本…</div>
+    </div>
+  </div>
+  <div class="panel-end" id="panelEnd">
+    <div class="panel-end-icon">🦞</div>
+    <div class="panel-end-text">— Panel 播放结束 —</div>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="controls-inner">
+    <div class="progress-row">
+      <span class="progress-time" id="timeElapsed">0:00</span>
+      <div class="progress-track" id="progressTrack">
+        <div class="progress-fill" id="progressFill"></div>
+        <div class="progress-thumb" id="progressThumb"></div>
+      </div>
+      <span class="progress-time" id="timeTotal">0:00</span>
+    </div>
+    <div class="btn-row">
+      <button class="ctrl-btn" id="btnRestart" title="重新开始" aria-label="重新开始">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="1 4 1 10 7 10"></polyline>
+          <path d="M3.51 15a9 9 0 1 0 .49-4.56"></path>
+        </svg>
+      </button>
+      <button class="ctrl-btn primary" id="btnPlayPause" aria-label="播放">
+        <svg id="iconPlay" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        <svg id="iconPause" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="display:none">
+          <rect x="6" y="4" width="4" height="16"></rect>
+          <rect x="14" y="4" width="4" height="16"></rect>
+        </svg>
+      </button>
+      <button class="ctrl-btn" id="btnSkip" title="跳过当前" aria-label="跳过">
+        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+          <polygon points="5 4 15 12 5 20 5 4"></polygon>
+          <rect x="18" y="5" width="3" height="14" rx="1"></rect>
+        </svg>
+      </button>
+      <div style="flex:1"></div>
+      <div class="speed-group">
+        <button class="speed-btn" data-speed="18">快</button>
+        <button class="speed-btn active" data-speed="38">中</button>
+        <button class="speed-btn" data-speed="75">慢</button>
+      </div>
+      <button class="btn-expand" id="btnExpand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="4 14 10 14 10 20"></polyline>
+          <polyline points="20 10 14 10 14 4"></polyline>
+          <line x1="14" y1="10" x2="21" y2="3"></line>
+          <line x1="3" y1="21" x2="10" y2="14"></line>
+        </svg>
+        <span>全部展开</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ──────────────────────────────────────────────
+//  SPEAKER REGISTRY
+// ──────────────────────────────────────────────
+const SPEAKERS = {
+  zhengshuxin: { name: '郑书新',     title: '主持人',        avatar: '🧑‍🏫' },
+  lifeifei:    { name: '李飞飞',     title: 'Stanford 教授', avatar: '👩‍🔬' },
+  hekaiming:   { name: '何恺明',     title: 'MIT 教授',      avatar: '👨‍💻' },
+  samaltman:   { name: 'Sam Altman', title: 'OpenAI CEO',   avatar: '🌐' },
+  openclaw:    { name: 'OpenClaw龙虾', title: '龙虾研究员',   avatar: '🦞' },
+  secretary:   { name: 'Panel秘书', title: 'AI 秘书',       avatar: '🤖' },
+};
+const VISIBLE_SPEAKERS = ['zhengshuxin', 'lifeifei', 'hekaiming', 'samaltman', 'openclaw'];
+
+// ──────────────────────────────────────────────
+//  STATE
+// ──────────────────────────────────────────────
+let scriptData   = null;
+let currentIndex = 0;
+let isPlaying    = false;
+let isExpanded   = false;
+let isTyping     = false;
+let charSpeed    = 38;  // ms per character
+let typingHandle = null;
+let charQueue    = [];  // chars yet to type for current segment
+let charTimer    = null;
+
+// ──────────────────────────────────────────────
+//  DOM
+// ──────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const speakerStrip    = $('speakerStrip');
+const conversationArea= $('conversationArea');
+const loadingState   = $('loadingState');
+const btnPlayPause   = $('btnPlayPause');
+const btnRestart     = $('btnRestart');
+const btnSkip        = $('btnSkip');
+const btnExpand      = $('btnExpand');
+const progressFill   = $('progressFill');
+const progressThumb  = $('progressThumb');
+const progressTrack  = $('progressTrack');
+const timeElapsed    = $('timeElapsed');
+const timeTotal      = $('timeTotal');
+const iconPlay       = $('iconPlay');
+const iconPause      = $('iconPause');
+const panelEnd       = $('panelEnd');
+
+// ──────────────────────────────────────────────
+//  SPEED BUTTONS
+// ──────────────────────────────────────────────
+document.querySelectorAll('.speed-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    charSpeed = parseInt(btn.dataset.speed);
+  });
+});
+
+// ──────────────────────────────────────────────
+//  INIT
+// ──────────────────────────────────────────────
+async function init() {
+  try {
+    const res = await fetch('../data/panel_script.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    scriptData = await res.json();
+
+    if (scriptData.panel_title) {
+      document.title = 'PanelClaw · ' + scriptData.panel_title.replace('Panel Discussion - ', '');
+    }
+
+    renderSpeakerStrip();
+    buildConversationDOM();
+    setupControls();
+    setupProgressTrack();
+
+    loadingState.style.display = 'none';
+    timeTotal.textContent = formatTime(estimateTotal());
+    updateProgressUI();
+
+    // Auto-show first segment after brief delay
+    setTimeout(() => {
+      if (!isExpanded) {
+        showSegment(0, false);
+      }
+    }, 600);
+  } catch (err) {
+    loadingState.innerHTML = `
+      <div class="error-state">
+        <div class="error-state-icon">⚠️</div>
+        <div class="error-state-msg">加载失败，请检查数据文件</div>
+        <div class="error-state-hint">${err.message}</div>
+      </div>`;
+  }
+}
+
+// ──────────────────────────────────────────────
+//  SPEAKER STRIP
+// ──────────────────────────────────────────────
+function renderSpeakerStrip() {
+  speakerStrip.innerHTML = '';
+  VISIBLE_SPEAKERS.forEach(id => {
+    const sp = SPEAKERS[id];
+    if (!sp) return;
+    const chip = document.createElement('div');
+    chip.className = 'speaker-chip';
+    chip.dataset.id = id;
+    chip.innerHTML = `
+      <div class="speaker-avatar">${sp.avatar}</div>
+      <span class="speaker-chip-label">${sp.name}</span>`;
+    chip.addEventListener('click', () => {
+      const idx = scriptData.segments.findIndex(s => s.speaker_id === id && s.type === 'answer');
+      if (idx >= 0) jumpTo(idx);
+    });
+    speakerStrip.appendChild(chip);
+  });
+}
+
+// ──────────────────────────────────────────────
+//  BUILD ALL DOM ELEMENTS (lazy — only visible ones get text)
+// ──────────────────────────────────────────────
+function buildConversationDOM() {
+  conversationArea.innerHTML = '';
+  conversationArea.appendChild(loadingState);
+  loadingState.style.display = 'none';
+
+  let lastQ = -1;
+  scriptData.segments.forEach((seg, i) => {
+    // Question divider
+    const qIdx = seg.round ?? seg.question_index ?? 0;
+    if (qIdx !== lastQ && qIdx > 0) {
+      const qText = seg.question_text || (scriptData.questions && scriptData.questions[qIdx]) || '';
+      const d = document.createElement('div');
+      d.className = 'q-divider';
+      d.id = `q-divider-${qIdx}`;
+      d.innerHTML = `
+        <div class="q-divider-inner">
+          <span class="q-divider-number">Q${qIdx}</span>
+          <span class="q-divider-text">${qText}</span>
+        </div>`;
+      conversationArea.appendChild(d);
+      lastQ = qIdx;
+    }
+
+    // Message block
+    const sp = SPEAKERS[seg.speaker_id] || { name: seg.speaker_id, avatar: '❓', title: '' };
+    const roleText = seg.role === 'host' ? '主持人' : seg.role === 'secretary' ? 'AI 秘书' : sp.title;
+    const enTag = seg.speaker_id === 'samaltman' ? '<span class="en-tag">EN</span>' : '';
+    const block = document.createElement('div');
+    block.className = `msg-block ${seg.speaker_id}`;
+    block.id = `msg-${i}`;
+    block.dataset.index = i;
+    block.innerHTML = `
+      <div class="msg-header">
+        <div class="msg-avatar">${sp.avatar}</div>
+        <div class="msg-info">
+          <span class="msg-name">${sp.name}${enTag}</span>
+          <span class="msg-role">${roleText}</span>
+        </div>
+      </div>
+      <div class="msg-body">
+        <span class="msg-text" id="text-${i}"></span>
+      </div>`;
+    conversationArea.appendChild(block);
+  });
+  conversationArea.appendChild(panelEnd);
+}
+
+// ──────────────────────────────────────────────
+//  SHOW / HIDE SEGMENTS
+// ──────────────────────────────────────────────
+function showSegment(index, withAnimation = true) {
+  if (index >= scriptData.segments.length) {
+    endPanel();
+    return;
+  }
+
+  currentIndex = index;
+  const seg = scriptData.segments[index];
+
+  // Scroll to divider if needed
+  const qIdx = seg.round ?? seg.question_index ?? 0;
+  if (qIdx > 0) {
+    const div = document.getElementById(`q-divider-${qIdx}`);
+    if (div && !div.classList.contains('visible')) div.classList.add('visible');
+  }
+
+  const block = document.getElementById(`msg-${index}`);
+  if (!block) { advance(); return; }
+
+  block.classList.add('visible');
+  if (!withAnimation) {
+    block.style.opacity = '1';
+    block.style.transform = 'none';
+  }
+
+  // Highlight speaker chip
+  speakerStrip.querySelectorAll('.speaker-chip').forEach(c => c.classList.remove('active'));
+  const chip = speakerStrip.querySelector(`[data-id="${seg.speaker_id}"]`);
+  if (chip) chip.classList.add('active');
+
+  // Scroll into view
+  block.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  updateProgressUI();
+
+  if (!isExpanded) {
+    if (seg.search_query) {
+      showSearchAnimation(index, seg.search_query);
+    } else {
+      startTypewriter(index);
+    }
+  } else {
+    document.getElementById(`text-${index}`).textContent = seg.content || seg.text || '';
+    setTimeout(advance, 300);
+  }
+}
+
+function advance() {
+  if (!isPlaying || isExpanded) return;
+  if (currentIndex < scriptData.segments.length) {
+    showSegment(currentIndex + 1, true);
+  } else {
+    endPanel();
+  }
+}
+
+function endPanel() {
+  isPlaying = false;
+  updatePlayBtn();
+  panelEnd.classList.add('visible');
+}
+
+// ──────────────────────────────────────────────
+//  TYPEWRITER ENGINE
+// ──────────────────────────────────────────────
+function startTypewriter(index) {
+  if (typingHandle) { clearTimeout(typingHandle); typingHandle = null; }
+  if (charTimer)    { clearInterval(charTimer);   charTimer   = null; }
+
+  const seg = scriptData.segments[index];
+  if (!seg) { advance(); return; }
+
+  const el = document.getElementById(`text-${index}`);
+  if (!el) { advance(); return; }
+
+  const text = seg.content || seg.text || '';
+  let pos = 0;
+  isTyping = true;
+
+  function typeNext() {
+    if (pos >= text.length) {
+      isTyping = false;
+      el.textContent = text;
+      // Remove cursor
+      el.querySelector('.typewriter-cursor')?.remove();
+      // Pause before next
+      typingHandle = setTimeout(advance, 1200);
+      return;
+    }
+    // Show partial text + cursor
+    el.textContent = text.slice(0, pos + 1);
+    const cursor = document.createElement('span');
+    cursor.className = 'typewriter-cursor';
+    el.appendChild(cursor);
+    pos++;
+    // Variable speed: pause longer on punctuation
+    const ch = text[pos - 1];
+    let delay = charSpeed;
+    if ('。！？.!?' .includes(ch)) delay = charSpeed * 5;
+    else if (',，、；;:，'.includes(ch)) delay = charSpeed * 2;
+    else if (ch === '\n') delay = charSpeed * 3;
+    charTimer = setTimeout(typeNext, delay);
+  }
+
+  typeNext();
+}
+
+function stopTypewriter() {
+  if (charTimer) { clearInterval(charTimer); charTimer = null; }
+  if (typingHandle) { clearTimeout(typingHandle); typingHandle = null; }
+  isTyping = false;
+}
+
+// ──────────────────────────────────────────────
+//  SEARCH ANIMATION
+// ──────────────────────────────────────────────
+function showSearchAnimation(index, query) {
+  const el = document.getElementById(`text-${index}`);
+  if (!el) { startTypewriter(index); return; }
+
+  el.innerHTML = `<span class="search-anim">
+    <span>🔍 正在搜索: ${query}</span>
+    <span class="search-anim-dot"></span>
+    <span class="search-anim-dot"></span>
+    <span class="search-anim-dot"></span>
+  </span>`;
+
+  typingHandle = setTimeout(() => {
+    el.innerHTML = '';
+    startTypewriter(index);
+  }, 1800);
+}
+
+function skipCurrent() {
+  if (!scriptData) return;
+  stopTypewriter();
+  const seg = scriptData.segments[currentIndex];
+  if (seg) {
+    const el = document.getElementById(`text-${currentIndex}`);
+    if (el) { el.textContent = seg.content || seg.text || ''; }
+  }
+  advance();
+}
+
+// ──────────────────────────────────────────────
+//  EXPAND MODE
+// ──────────────────────────────────────────────
+function toggleExpand() {
+  isExpanded = !isExpanded;
+  btnExpand.classList.toggle('active', isExpanded);
+  btnExpand.querySelector('span').textContent = isExpanded ? '收起' : '全部展开';
+
+  if (isExpanded) {
+    stopTypewriter();
+    // Show all text instantly
+    scriptData.segments.forEach((seg, i) => {
+      const el = document.getElementById(`text-${i}`);
+      if (el) el.textContent = seg.content || seg.text || '';
+      const block = document.getElementById(`msg-${i}`);
+      if (block) {
+        block.classList.add('visible');
+        block.style.opacity = '1';
+        block.style.transform = 'none';
+      }
+      const div = document.getElementById(`q-divider-${seg.round ?? seg.question_index ?? 0}`);
+      if (div) div.classList.add('visible');
+    });
+    panelEnd.classList.add('visible');
+    isPlaying = false;
+    updatePlayBtn();
+  } else {
+    // Reset to beginning
+    currentIndex = 0;
+    document.querySelectorAll('.msg-block').forEach(b => {
+      b.classList.remove('visible');
+      b.style.opacity = '';
+      b.style.transform = '';
+    });
+    document.querySelectorAll('.q-divider').forEach(d => d.classList.remove('visible'));
+    panelEnd.classList.remove('visible');
+    speakerStrip.querySelectorAll('.speaker-chip').forEach(c => c.classList.remove('active'));
+    showSegment(0, false);
+  }
+}
+
+// ──────────────────────────────────────────────
+//  PLAYBACK CONTROLS
+// ──────────────────────────────────────────────
+function setupControls() {
+  btnPlayPause.addEventListener('click', () => {
+    if (isExpanded) {
+      toggleExpand();
+      return;
+    }
+    if (isTyping) {
+      // Pause: finish current segment instantly
+      stopTypewriter();
+      const seg = scriptData.segments[currentIndex];
+      if (seg) {
+        const el = document.getElementById(`text-${currentIndex}`);
+        if (el) el.textContent = seg.content || seg.text || '';
+      }
+      isPlaying = false;
+      updatePlayBtn();
+    } else {
+      isPlaying = true;
+      updatePlayBtn();
+      showSegment(currentIndex, false);
+    }
+  });
+
+  btnRestart.addEventListener('click', () => {
+    if (isExpanded) toggleExpand();
+    stopTypewriter();
+    currentIndex = 0;
+    document.querySelectorAll('.msg-block').forEach(b => {
+      b.classList.remove('visible');
+      b.style.opacity = '';
+      b.style.transform = '';
+    });
+    document.querySelectorAll('.q-divider').forEach(d => d.classList.remove('visible'));
+    panelEnd.classList.remove('visible');
+    speakerStrip.querySelectorAll('.speaker-chip').forEach(c => c.classList.remove('active'));
+    isPlaying = false;
+    updatePlayBtn();
+    updateProgressUI();
+    setTimeout(() => showSegment(0, false), 100);
+  });
+
+  btnSkip.addEventListener('click', () => {
+    if (isExpanded) return;
+    skipCurrent();
+  });
+
+  btnExpand.addEventListener('click', toggleExpand);
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.code === 'Space') { e.preventDefault(); btnPlayPause.click(); }
+    else if (e.code === 'ArrowRight') btnSkip.click();
+    else if (e.code === 'ArrowLeft') { if (currentIndex > 0) jumpTo(currentIndex - 1); }
+  });
+}
+
+function updatePlayBtn() {
+  iconPlay.style.display  = isPlaying ? 'none' : 'block';
+  iconPause.style.display = isPlaying ? 'block' : 'none';
+}
+
+// ──────────────────────────────────────────────
+//  PROGRESS TRACK
+// ──────────────────────────────────────────────
+function setupProgressTrack() {
+  let dragging = false;
+
+  function seekTo(e) {
+    if (!scriptData || scriptData.segments.length === 0) return;
+    const rect = progressTrack.getBoundingClientRect();
+    const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    const targetIndex = Math.round(ratio * (scriptData.segments.length - 1));
+    jumpTo(targetIndex);
+  }
+
+  progressTrack.addEventListener('mousedown', e => {
+    dragging = true;
+    seekTo(e);
+  });
+  window.addEventListener('mousemove', e => { if (dragging) seekTo(e); });
+  window.addEventListener('mouseup', () => { dragging = false; });
+
+  progressTrack.addEventListener('touchstart', e => {
+    dragging = true;
+    seekTo(e.touches[0]);
+  }, { passive: true });
+  window.addEventListener('touchmove', e => { if (dragging) seekTo(e.touches[0]); }, { passive: true });
+  window.addEventListener('touchend', () => { dragging = false; });
+}
+
+function jumpTo(index) {
+  if (!scriptData) return;
+  index = Math.max(0, Math.min(scriptData.segments.length - 1, index));
+  stopTypewriter();
+  isPlaying = false;
+  updatePlayBtn();
+  currentIndex = index;
+  // Reset visibility
+  scriptData.segments.forEach((seg, i) => {
+    const block = document.getElementById(`msg-${i}`);
+    if (block) block.classList.toggle('visible', i <= index);
+  });
+  document.querySelectorAll('.q-divider').forEach(d => d.classList.remove('visible'));
+  // Re-show dividers for all questions up to and including current segment
+  scriptData.segments.slice(0, index + 1).forEach(s => {
+    const qi = s.round ?? s.question_index ?? 0;
+    if (qi > 0) {
+      const div = document.getElementById(`q-divider-${qi}`);
+      if (div) div.classList.add('visible');
+    }
+  });
+  panelEnd.classList.remove('visible');
+  showSegment(index, false);
+}
+
+function updateProgressUI() {
+  if (!scriptData || scriptData.segments.length === 0) return;
+  const total  = scriptData.segments.length;
+  const ratio   = currentIndex / total;
+  progressFill.style.width  = `${ratio * 100}%`;
+  progressThumb.style.left   = `${ratio * 100}%`;
+  timeElapsed.textContent    = formatTime(estimateElapsed());
+  timeTotal.textContent      = formatTime(estimateTotal());
+}
+
+function estimateTotal() {
+  if (!scriptData) return 0;
+  return scriptData.segments.reduce((sum, s) => sum + (s.duration_estimate || 20), 0);
+}
+
+function estimateElapsed() {
+  if (!scriptData || currentIndex === 0) return 0;
+  let sum = 0;
+  for (let i = 0; i < currentIndex; i++) {
+    sum += scriptData.segments[i].duration_estimate || 20;
+  }
+  return sum;
+}
+
+function formatTime(seconds) {
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
+// ──────────────────────────────────────────────
+//  START
+// ──────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>
