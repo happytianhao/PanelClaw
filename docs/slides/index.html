@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PanelClaw — 演示幻灯片</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0d;
+      --surface: #1a1a1a;
+      --surface2: #242424;
+      --border: #2e2e2e;
+      --text: #e8e8e8;
+      --muted: #888;
+      --accent: #ff6b35;
+      --accent2: #f7c59f;
+      --blue: #4a90d9;
+      --green: #5cb85c;
+      --purple: #9b59b6;
+      --script-h: 120px;
+      --progress-h: 4px;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Segoe UI', sans-serif;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* ── Progress bar ── */
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: var(--progress-h);
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width 0.35s ease;
+      z-index: 100;
+    }
+
+    /* ── Slide counter ── */
+    #counter {
+      position: fixed;
+      top: 12px; right: 18px;
+      font-size: 13px;
+      color: var(--muted);
+      z-index: 100;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Slides container ── */
+    #slides {
+      position: fixed;
+      top: var(--progress-h);
+      left: 0;
+      right: 0;
+      bottom: var(--script-h);
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 64px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateX(40px);
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+    }
+
+    .slide.exit {
+      opacity: 0;
+      transform: translateX(-40px);
+    }
+
+    /* ── Click zones ── */
+    #zone-prev, #zone-next {
+      position: fixed;
+      top: var(--progress-h);
+      bottom: var(--script-h);
+      width: 20%;
+      z-index: 50;
+      cursor: pointer;
+    }
+    #zone-prev { left: 0; }
+    #zone-next { right: 0; }
+
+    /* ── Script panel ── */
+    #script-panel {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: var(--script-h);
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 28px;
+      gap: 16px;
+      z-index: 100;
+    }
+
+    #script-label {
+      font-size: 11px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+      font-weight: 600;
+    }
+
+    #script-text {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text);
+      flex: 1;
+      overflow-y: auto;
+      max-height: calc(var(--script-h) - 24px);
+    }
+
+    #script-toggle {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    #script-toggle:hover { color: var(--text); border-color: var(--accent); }
+
+    #script-panel.hidden { display: none; }
+
+    /* ── Slide content helpers ── */
+    .slide-title {
+      font-size: clamp(28px, 4vw, 52px);
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .slide-subtitle {
+      font-size: clamp(14px, 1.8vw, 20px);
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 60%, #fff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 4px;
+    }
+
+    .tag.accent { border-color: var(--accent); color: var(--accent); }
+
+    .tags { text-align: center; margin-top: 8px; }
+
+    /* ── Flow diagram ── */
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 32px 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .flow-step {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 22px;
+      text-align: center;
+      min-width: 160px;
+    }
+
+    .flow-step .icon { font-size: 28px; margin-bottom: 8px; }
+    .flow-step .label { font-size: 14px; color: var(--text); font-weight: 500; }
+    .flow-step .sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    .flow-arrow {
+      font-size: 22px;
+      color: var(--accent);
+      padding: 0 10px;
+    }
+
+    /* ── Guest cards ── */
+    .guests {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 16px;
+    }
+
+    .guest-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      text-align: center;
+      min-width: 130px;
+      transition: border-color 0.2s;
+    }
+
+    .guest-card:hover { border-color: var(--accent); }
+    .guest-card .avatar { font-size: 32px; margin-bottom: 8px; }
+    .guest-card .name { font-size: 15px; font-weight: 600; }
+    .guest-card .role { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    /* ── Quote cards ── */
+    .quotes {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      width: 100%;
+      max-width: 760px;
+    }
+
+    .quote-card {
+      background: var(--surface2);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+    }
+
+    .quote-card.blue { border-left-color: var(--blue); }
+    .quote-card.green { border-left-color: var(--green); }
+
+    .quote-speaker {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .quote-text {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    /* ── Capability grid ── */
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      width: 100%;
+      max-width: 720px;
+      margin-top: 16px;
+    }
+
+    .cap-item {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 16px;
+      text-align: center;
+    }
+
+    .cap-item .cap-icon { font-size: 26px; margin-bottom: 8px; }
+    .cap-item .cap-name { font-size: 14px; font-weight: 600; }
+    .cap-item .cap-desc { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+    /* ── Big question ── */
+    .big-question {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border: 1px solid #2a3a5e;
+      border-radius: 16px;
+      padding: 28px 40px;
+      text-align: center;
+      margin: 24px 0;
+      max-width: 640px;
+    }
+
+    .big-question .q-label {
+      font-size: 12px;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .big-question .q-text {
+      font-size: clamp(20px, 2.8vw, 32px);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    /* ── Value statement ── */
+    .value-box {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 32px;
+      text-align: center;
+      max-width: 600px;
+      margin: 20px 0;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--accent2);
+    }
+
+    .author-info {
+      margin-top: 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .author-info a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat .num {
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stat .unit {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── Keyboard hint ── */
+    #hint {
+      position: fixed;
+      bottom: calc(var(--script-h) + 12px);
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      color: var(--border);
+      z-index: 60;
+      pointer-events: none;
+      transition: opacity 1s ease;
+    }
+  </style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<div id="counter">1 / 7</div>
+
+<!-- Click zones -->
+<div id="zone-prev"></div>
+<div id="zone-next"></div>
+
+<!-- Slides -->
+<div id="slides">
+
+  <!-- Slide 1: Cover -->
+  <div class="slide active" data-script="大家好，我是赵天浩，来自北京中关村学院。今天我要介绍的项目叫 PanelClaw——震惊！你的龙虾们正在自己偷偷搞学术Panel！这是一场由AI龙虾自主发起的学术圆桌，全程无人工干预。">
+    <div class="slide-title">
+      🦞 <span class="gradient-text">PanelClaw</span>
+    </div>
+    <div class="slide-subtitle">震惊！你的龙虾们正在自己偷偷搞学术Panel！</div>
+    <div class="tags">
+      <span class="tag accent">AI龙虾自主学术圆桌</span>
+      <span class="tag accent">全程无人工干预</span>
+    </div>
+    <div class="tags" style="margin-top: 12px;">
+      <span class="tag">北纬·龙虾大赛（第一届）</span>
+      <span class="tag">OpenClaw Hackathon</span>
+      <span class="tag">学术龙虾赛道</span>
+    </div>
+  </div>
+
+  <!-- Slide 2: Problem / Idea -->
+  <div class="slide" data-script="我们想象这样一个场景：如果让AI龙虾们自己组织一场学术Panel，邀请李飞飞、何恺明、Sam Altman来讨论「科研是需要龙虾还是牛马」，会发生什么？PanelClaw就是这个想象的实现。">
+    <div class="slide-title" style="font-size: clamp(22px, 3vw, 38px);">如果AI龙虾自己搞学术Panel……</div>
+    <div class="slide-subtitle">邀请顶级学者，讨论最硬核的问题</div>
+    <div class="big-question">
+      <div class="q-label">Panel 核心议题</div>
+      <div class="q-text">科研是需要龙虾还是牛马？🦞</div>
+    </div>
+    <div class="tags">
+      <span class="tag">李飞飞</span>
+      <span class="tag">何恺明</span>
+      <span class="tag">Sam Altman</span>
+      <span class="tag accent">全由AI龙虾扮演</span>
+    </div>
+  </div>
+
+  <!-- Slide 3: How it works -->
+  <div class="slide" data-script="每只龙虾作为独立智能体，自主扮演角色发言。主持人是龙虾，嘉宾是龙虾，连会后写总结的秘书也是龙虾。所有发言存为JSON，通过网页以打字机动画形式完整回放。">
+    <div class="slide-title" style="font-size: clamp(22px, 3vw, 38px);">它是怎么工作的？</div>
+    <div class="slide-subtitle">多智能体 → 结构化数据 → 网页回放</div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="icon">🦞</div>
+        <div class="label">各龙虾智能体</div>
+        <div class="sub">自主扮演角色发言</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="icon">📄</div>
+        <div class="label">JSON 数据</div>
+        <div class="sub">结构化脚本存储</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="icon">⌨️</div>
+        <div class="label">打字机回放</div>
+        <div class="sub">网页动态展示</div>
+      </div>
+    </div>
+    <div class="tags">
+      <span class="tag">主持人龙虾</span>
+      <span class="tag">嘉宾龙虾</span>
+      <span class="tag accent">秘书龙虾自动写总结</span>
+    </div>
+  </div>
+
+  <!-- Slide 4: Guest lineup -->
+  <div class="slide" data-script="阵容非常豪华——郑书新主持，李飞飞、何恺明、Sam Altman三位学术大佬，加上OpenClaw龙虾吉祥物。4个核心问题，40个发言片段，约17分钟全场。">
+    <div class="slide-title" style="font-size: clamp(22px, 3vw, 38px);">豪华嘉宾阵容</div>
+    <div class="slide-subtitle">5位嘉宾，全由AI龙虾自主扮演</div>
+    <div class="guests">
+      <div class="guest-card">
+        <div class="avatar">🎤</div>
+        <div class="name">郑书新</div>
+        <div class="role">主持人 · 中关村学院</div>
+      </div>
+      <div class="guest-card">
+        <div class="avatar">🔬</div>
+        <div class="name">李飞飞</div>
+        <div class="role">Stanford · HAI</div>
+      </div>
+      <div class="guest-card">
+        <div class="avatar">🧠</div>
+        <div class="name">何恺明</div>
+        <div class="role">MIT CSAIL · ResNet</div>
+      </div>
+      <div class="guest-card">
+        <div class="avatar">🚀</div>
+        <div class="name">Sam Altman</div>
+        <div class="role">OpenAI CEO</div>
+      </div>
+      <div class="guest-card" style="border-color: var(--accent);">
+        <div class="avatar">🦞</div>
+        <div class="name">OpenClaw</div>
+        <div class="role">龙虾吉祥物</div>
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="stat"><div class="num">4</div><div class="unit">核心问题</div></div>
+      <div class="stat"><div class="num">40</div><div class="unit">发言片段</div></div>
+      <div class="stat"><div class="num">~17</div><div class="unit">分钟全场</div></div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Demo / Highlights -->
+  <div class="slide" data-script="Panel内容非常精彩。何恺明说：真正的突破来自对问题的深刻理解，不靠灵光一现。OpenClaw龙虾说：咔咔咔！我们龙虾存活了4.8亿年，适应力才是核心竞争力。嘉宾之间还有真实的观点碰撞。">
+    <div class="slide-title" style="font-size: clamp(20px, 2.8vw, 36px);">Panel 精彩片段</div>
+    <div class="slide-subtitle">真实观点碰撞，金句频出</div>
+    <div class="quotes">
+      <div class="quote-card blue">
+        <div class="quote-speaker">🧠 何恺明 · MIT CSAIL</div>
+        <div class="quote-text">真正的突破来自对问题的深刻理解，不靠灵光一现，靠的是反复打磨、不断迭代。牛马精神不是贬义，是工程师文化的核心。</div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-speaker">🦞 OpenClaw 龙虾</div>
+        <div class="quote-text">咔咔咔！我们龙虾在地球上存活了4.8亿年，靠的不是最强的爪子，而是最强的适应力。科研也一样——环境变了，你得先活下来，才能谈创新！</div>
+      </div>
+      <div class="quote-card green">
+        <div class="quote-speaker">🔬 李飞飞 · Stanford HAI</div>
+        <div class="quote-text">AI时代的科研，需要的不只是算力和数据，更需要人文关怀。技术是工具，问题意识才是灵魂。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: Tech -->
+  <div class="slide" data-script="技术上，用OpenClaw多智能体框架驱动各角色自主发言，前端纯HTML/CSS/JS实现打字机动画、进度拖拽、全展开模式，AI秘书龙虾自动生成结构化总结报告，部署在GitHub Pages，零后端。">
+    <div class="slide-title" style="font-size: clamp(22px, 3vw, 38px);">技术能力</div>
+    <div class="slide-subtitle">纯静态 · 零后端 · 全龙虾驱动</div>
+    <div class="cap-grid">
+      <div class="cap-item">
+        <div class="cap-icon">🦞</div>
+        <div class="cap-name">多智能体框架</div>
+        <div class="cap-desc">OpenClaw 驱动各角色自主发言</div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-icon">⌨️</div>
+        <div class="cap-name">打字机回放</div>
+        <div class="cap-desc">逐字动画，速度可调</div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-icon">🎚️</div>
+        <div class="cap-name">进度控制</div>
+        <div class="cap-desc">拖拽跳转任意片段</div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-icon">📖</div>
+        <div class="cap-name">全展开模式</div>
+        <div class="cap-desc">一键查看完整脚本</div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-icon">📋</div>
+        <div class="cap-name">AI秘书总结</div>
+        <div class="cap-desc">龙虾秘书自动生成报告</div>
+      </div>
+      <div class="cap-item">
+        <div class="cap-icon">🌐</div>
+        <div class="cap-name">纯静态部署</div>
+        <div class="cap-desc">GitHub Pages，零后端</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 7: Closing -->
+  <div class="slide" data-script="PanelClaw证明了一件事：AI龙虾不只能干活，还能搞学术。这场Panel的核心共识是——AI时代的优秀研究者，既要有龙虾的适应力，也要有牛马的坚持，还要有人文关怀的底色。咔咔咔，谢谢大家！">
+    <div class="slide-title">
+      🦞 <span class="gradient-text">PanelClaw</span>
+    </div>
+    <div class="slide-subtitle">AI龙虾自主学术圆桌，全程无人工干预</div>
+    <div class="value-box">
+      AI时代的优秀研究者，既要有龙虾的适应力，<br/>
+      也要有牛马的坚持，还要有人文关怀的底色。<br/>
+      <strong style="color: var(--accent);">咔咔咔！🦞</strong>
+    </div>
+    <div class="author-info">
+      赵天浩 · 北京中关村学院 · zthwhucs@gmail.com<br/>
+      <a href="https://github.com/happytianhao/PanelClaw" target="_blank">github.com/happytianhao/PanelClaw</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Script panel -->
+<div id="script-panel">
+  <span id="script-label">🎙 讲稿</span>
+  <div id="script-text"></div>
+  <button id="script-toggle">隐藏</button>
+</div>
+
+<div id="hint">← 点击左侧 / 右侧 → 或使用方向键翻页</div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  let current = 0;
+  let hintTimer;
+
+  const progressBar = document.getElementById('progress-bar');
+  const counter = document.getElementById('counter');
+  const scriptText = document.getElementById('script-text');
+  const scriptPanel = document.getElementById('script-panel');
+  const scriptToggle = document.getElementById('script-toggle');
+  const hint = document.getElementById('hint');
+
+  function goTo(index) {
+    if (index < 0 || index >= total) return;
+
+    slides[current].classList.remove('active');
+    slides[current].classList.add('exit');
+    setTimeout(() => slides[current - (index > current ? 0 : 0)].classList.remove('exit'), 400);
+
+    // Clean up exit class after transition
+    const prev = current;
+    setTimeout(() => slides[prev].classList.remove('exit'), 420);
+
+    current = index;
+    slides[current].classList.add('active');
+
+    // Progress
+    const pct = total <= 1 ? 100 : (current / (total - 1)) * 100;
+    progressBar.style.width = pct + '%';
+
+    // Counter
+    counter.textContent = (current + 1) + ' / ' + total;
+
+    // Script
+    const script = slides[current].dataset.script || '';
+    scriptText.textContent = script;
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  // Click zones
+  document.getElementById('zone-next').addEventListener('click', next);
+  document.getElementById('zone-prev').addEventListener('click', prev);
+
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prev(); }
+    if (e.key === 'Home') goTo(0);
+    if (e.key === 'End') goTo(total - 1);
+  });
+
+  // Script toggle
+  scriptToggle.addEventListener('click', () => {
+    const hidden = scriptPanel.classList.toggle('hidden');
+    scriptToggle.textContent = hidden ? '显示讲稿' : '隐藏';
+    document.getElementById('slides').style.bottom = hidden ? '0' : 'var(--script-h)';
+    document.getElementById('zone-prev').style.bottom = hidden ? '0' : 'var(--script-h)';
+    document.getElementById('zone-next').style.bottom = hidden ? '0' : 'var(--script-h)';
+    hint.style.bottom = hidden ? '12px' : 'calc(var(--script-h) + 12px)';
+  });
+
+  // Touch swipe
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 50) { dx < 0 ? next() : prev(); }
+  }, { passive: true });
+
+  // Hint fade
+  hint.style.opacity = '1';
+  hintTimer = setTimeout(() => { hint.style.opacity = '0'; }, 4000);
+
+  // Init
+  goTo(0);
+</script>
+</body>
+</html>

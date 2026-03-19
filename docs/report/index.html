@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PanelClaw · 项目说明书</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --bg2: #161b22;
+      --bg3: #21262d;
+      --accent: #7c3aed;
+      --accent2: #3b82f6;
+      --text: #e6edf3;
+      --text2: #8b949e;
+      --border: #30363d;
+      --green: #3fb950;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif; line-height: 1.8; }
+
+    /* Nav */
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(13,17,23,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 14px 0; }
+    .nav-inner { max-width: 860px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-weight: 700; font-size: 16px; color: var(--text); text-decoration: none; }
+    .nav-logo span { background: linear-gradient(135deg, #7c3aed, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .nav-back { font-size: 13px; color: var(--text2); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+    .nav-back:hover { color: var(--text); }
+
+    /* Hero */
+    .doc-hero { padding: 64px 24px 48px; text-align: center; max-width: 860px; margin: 0 auto; }
+    .doc-badge { display: inline-block; background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.35); color: #a78bfa; padding: 4px 14px; border-radius: 20px; font-size: 12px; margin-bottom: 20px; }
+    .doc-title { font-size: clamp(28px, 5vw, 44px); font-weight: 800; letter-spacing: -1px; margin-bottom: 12px; }
+    .doc-subtitle { color: var(--text2); font-size: 15px; }
+
+    /* Content */
+    .doc-body { max-width: 860px; margin: 0 auto; padding: 0 24px 80px; }
+
+    /* TOC */
+    .toc { background: var(--bg2); border: 1px solid var(--border); border-radius: 12px; padding: 24px 28px; margin-bottom: 48px; }
+    .toc-title { font-size: 13px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+    .toc ol { padding-left: 20px; }
+    .toc li { margin: 6px 0; }
+    .toc a { color: var(--text2); text-decoration: none; font-size: 14px; }
+    .toc a:hover { color: var(--accent2); }
+
+    /* Sections */
+    .section { margin-bottom: 56px; }
+    .section-num { font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+    h2 { font-size: clamp(20px, 3vw, 26px); font-weight: 700; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    h3 { font-size: 17px; font-weight: 600; margin: 28px 0 12px; color: var(--text); }
+    p { color: #c9d1d9; font-size: 15px; margin-bottom: 14px; }
+    strong { color: var(--text); }
+
+    /* Blockquote */
+    blockquote { border-left: 3px solid var(--accent); background: rgba(124,58,237,0.08); padding: 14px 20px; border-radius: 0 8px 8px 0; margin: 16px 0; }
+    blockquote p { margin: 0; color: #c9d1d9; font-style: italic; }
+
+    /* Tables */
+    .table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 10px; border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th { background: var(--bg3); color: var(--text2); font-weight: 600; padding: 10px 16px; text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+    td { padding: 10px 16px; border-top: 1px solid var(--border); color: #c9d1d9; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+
+    /* Code */
+    pre { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 20px; overflow-x: auto; margin: 16px 0; }
+    code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; color: #79c0ff; }
+    pre code { color: #c9d1d9; }
+    p code, li code { background: var(--bg3); padding: 2px 6px; border-radius: 4px; font-size: 13px; color: #79c0ff; }
+
+    /* Lists */
+    ul, ol { padding-left: 22px; margin-bottom: 14px; }
+    li { color: #c9d1d9; font-size: 15px; margin: 6px 0; }
+
+    /* Stats cards */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin: 20px 0; }
+    .stat-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 18px 16px; text-align: center; }
+    .stat-num { font-size: 32px; font-weight: 800; background: linear-gradient(135deg, #7c3aed, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.1; }
+    .stat-label { font-size: 12px; color: var(--text2); margin-top: 6px; }
+
+    /* Footer */
+    footer { border-top: 1px solid var(--border); padding: 28px 24px; text-align: center; color: var(--text2); font-size: 13px; line-height: 2; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../" class="nav-logo">Panel<span>Claw</span></a>
+    <a href="../" class="nav-back">← 返回项目主页</a>
+  </div>
+</nav>
+
+<div class="doc-hero">
+  <div class="doc-badge">北纬·龙虾大赛（第一届）· OpenClaw Hackathon · 学术龙虾赛道</div>
+  <div class="doc-title">项目说明书</div>
+  <div class="doc-subtitle">PanelClaw · 震惊！你的龙虾们正在自己偷偷搞学术Panel！</div>
+</div>
+
+<div class="doc-body">
+
+  <div class="toc">
+    <div class="toc-title">目录</div>
+    <ol>
+      <li><a href="#s1">项目背景与创意来源</a></li>
+      <li><a href="#s2">解决方案：PanelClaw</a></li>
+      <li><a href="#s3">龙虾阵容</a></li>
+      <li><a href="#s4">Panel议程</a></li>
+      <li><a href="#s5">技术实现</a></li>
+      <li><a href="#s6">网页回放功能</a></li>
+      <li><a href="#s7">数据结构</a></li>
+      <li><a href="#s8">项目价值</a></li>
+      <li><a href="#s9">团队信息</a></li>
+    </ol>
+  </div>
+
+  <!-- 一 -->
+  <div class="section" id="s1">
+    <div class="section-num">一</div>
+    <h2>项目背景与创意来源</h2>
+
+    <p>学术Panel是知识传播的重要形式，但组织成本高、嘉宾难邀请，一场高质量的圆桌讨论往往需要耗费大量人力协调。</p>
+    <p>如果AI龙虾能自主扮演学术大佬，会发生什么？</p>
+    <p>PanelClaw的核心问题是：<strong>科研是需要龙虾还是牛马？</strong> 这个问题本身就是对AI时代科研范式的深刻追问——在大模型涌现的今天，科研工作者究竟需要的是龙虾式的灵活适应，还是牛马式的深度坚持？</p>
+    <p>PanelClaw让AI龙虾们自主发起这场讨论，全程无人工干预，人类只需观看回放。</p>
+  </div>
+
+  <!-- 二 -->
+  <div class="section" id="s2">
+    <div class="section-num">二</div>
+    <h2>解决方案：PanelClaw</h2>
+
+    <h3>2.1 核心思路</h3>
+    <blockquote><p>让AI龙虾们自主发起、自主发言、自主总结，人类只需观看回放。</p></blockquote>
+
+    <h3>2.2 角色分工</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>角色</th><th>由谁扮演</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>主持人</td><td>OpenClaw龙虾</td><td>扮演郑书新，负责提问与串场</td></tr>
+          <tr><td>嘉宾</td><td>OpenClaw龙虾</td><td>分别扮演李飞飞、何恺明、Sam Altman、OpenClaw龙虾</td></tr>
+          <tr><td>秘书</td><td>OpenClaw龙虾</td><td>会后生成结构化总结报告</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>2.3 工作流程</h3>
+    <pre><code>龙虾智能体自主发言
+  ↓
+JSON存储（panel_script.json）
+  ↓
+网页打字机回放（docs/index.html）
+  ↓
+AI秘书总结（panel_summary.json）</code></pre>
+  </div>
+
+  <!-- 三 -->
+  <div class="section" id="s3">
+    <div class="section-num">三</div>
+    <h2>龙虾阵容</h2>
+
+    <p>本次Panel共有6位龙虾嘉宾参与，全部由OpenClaw龙虾扮演。所有发言内容为虚构创作，不代表真实人物观点。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>角色</th><th>扮演者</th><th>身份背景</th><th>发言语言</th></tr></thead>
+        <tbody>
+          <tr><td>主持人</td><td>郑书新龙虾</td><td>北京中关村学院副教授，中关村人工智能研究院副院长</td><td>中文</td></tr>
+          <tr><td>嘉宾1</td><td>李飞飞龙虾</td><td>Stanford教授，HAI联合院长，World Labs联合创始人</td><td>中文</td></tr>
+          <tr><td>嘉宾2</td><td>何恺明龙虾</td><td>MIT CSAIL助理教授，前Meta FAIR研究科学家</td><td>中文</td></tr>
+          <tr><td>嘉宾3</td><td>Sam Altman龙虾</td><td>OpenAI CEO</td><td>英文</td></tr>
+          <tr><td>嘉宾4</td><td>OpenClaw龙虾</td><td>本届Hackathon吉祥物，龙虾视角看学术圈</td><td>中文</td></tr>
+          <tr><td>秘书</td><td>AI秘书龙虾</td><td>负责生成结构化总结报告</td><td>中文</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 四 -->
+  <div class="section" id="s4">
+    <div class="section-num">四</div>
+    <h2>Panel议程</h2>
+
+    <p>Panel共设4个核心问题，每题发言顺序固定。</p>
+
+    <h3>问题1：科研需要的是龙虾还是牛马？</h3>
+    <p>主持人开场提问，引出Panel核心议题。</p>
+    <p>发言顺序：郑书新（提问）→ 李飞飞 → 何恺明 → Sam Altman → OpenClaw</p>
+
+    <h3>问题2：AI会取代科研工作者吗？</h3>
+    <p>深入讨论AI在科研中的角色定位。</p>
+    <p>发言顺序：郑书新（提问）→ Sam Altman → 何恺明 → 李飞飞 → OpenClaw</p>
+
+    <h3>问题3：什么样的科研环境才能孵化出真正的创新？</h3>
+    <p>从各自视角谈科研生态与制度设计。</p>
+    <p>发言顺序：郑书新（提问）→ 李飞飞 → OpenClaw → 何恺明 → Sam Altman</p>
+
+    <h3>问题4：给年轻研究者的一句话建议</h3>
+    <p>收尾环节，每位嘉宾留下金句。</p>
+    <p>发言顺序：郑书新（提问）→ OpenClaw → Sam Altman → 何恺明 → 李飞飞 → 郑书新（总结）</p>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">4</div>
+        <div class="stat-label">个核心问题</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">40</div>
+        <div class="stat-label">个发言片段</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">约17</div>
+        <div class="stat-label">分钟回放时长</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 五 -->
+  <div class="section" id="s5">
+    <div class="section-num">五</div>
+    <h2>技术实现</h2>
+
+    <h3>5.1 技术栈</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>组件</th><th>方案</th></tr></thead>
+        <tbody>
+          <tr><td>多智能体框架</td><td>OpenClaw（Claude API）</td></tr>
+          <tr><td>数据格式</td><td>JSON（speakers.json, panel_script.json, panel_summary.json）</td></tr>
+          <tr><td>前端</td><td>纯HTML/CSS/JavaScript（无框架）</td></tr>
+          <tr><td>部署</td><td>GitHub Pages</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>5.2 数据模型</h3>
+    <p><code>panel_script.json</code> 中每个发言片段（segment）的结构如下：</p>
+    <pre><code>{
+  "segment_id": 1,
+  "question_index": 1,
+  "question_text": "科研需要的是龙虾还是牛马？",
+  "speaker_id": "zhengshuxin",
+  "role": "host",
+  "text": "...",
+  "duration_estimate": 15
+}</code></pre>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>字段</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td><code>segment_id</code></td><td>片段序号，从1开始</td></tr>
+          <tr><td><code>question_index</code></td><td>所属问题编号（1-4）</td></tr>
+          <tr><td><code>question_text</code></td><td>当前问题文本（仅host发言时填写）</td></tr>
+          <tr><td><code>speaker_id</code></td><td>发言人ID，与speakers.json对应</td></tr>
+          <tr><td><code>role</code></td><td><code>host</code>、<code>guest</code>、<code>secretary</code></td></tr>
+          <tr><td><code>text</code></td><td>发言正文</td></tr>
+          <tr><td><code>duration_estimate</code></td><td>预估打字机播放时长（秒）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 六 -->
+  <div class="section" id="s6">
+    <div class="section-num">六</div>
+    <h2>网页回放功能</h2>
+
+    <p>网页播放器通过 <code>fetch('../data/panel_script.json')</code> 读取脚本数据，以打字机动画形式逐段播放全场发言。</p>
+
+    <ul>
+      <li><strong>打字机动画</strong>：默认50ms/字，中英文混排自动适配</li>
+      <li><strong>播放/暂停控制</strong>：随时暂停或继续播放</li>
+      <li><strong>进度条拖拽</strong>：跳转到任意发言片段的起始位置</li>
+      <li><strong>全展开模式</strong>：一键查看完整文字稿，不播放动画</li>
+      <li><strong>嘉宾头像</strong>：点击展示详细简介</li>
+      <li><strong>嘉宾主题色高亮</strong>：每位嘉宾拥有独立主题色，打字机动画高亮显示</li>
+    </ul>
+
+    <p>播放速度可通过URL参数调整：<code>?speed=fast</code> 或 <code>?speed=slow</code></p>
+  </div>
+
+  <!-- 七 -->
+  <div class="section" id="s7">
+    <div class="section-num">七</div>
+    <h2>数据结构</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>文件</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td><code>docs/data/speakers.json</code></td><td>嘉宾信息（6位嘉宾+秘书）</td></tr>
+          <tr><td><code>docs/data/panel_script.json</code></td><td>Panel对话脚本（40个片段）</td></tr>
+          <tr><td><code>docs/data/panel_summary.json</code></td><td>AI秘书结构化总结</td></tr>
+          <tr><td><code>docs/data/panel_summary.md</code></td><td>可读版总结报告</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 八 -->
+  <div class="section" id="s8">
+    <div class="section-num">八</div>
+    <h2>项目价值</h2>
+
+    <p>PanelClaw证明了AI龙虾能自主组织高质量学术讨论，探索了多智能体协作的新范式。</p>
+    <p>经过一场完整的Panel讨论，龙虾们达成了一个核心共识：</p>
+
+    <blockquote><p>AI时代优秀研究者 = 龙虾的适应力 × 牛马的深度坚持 × 人文关怀的底色</p></blockquote>
+
+    <p>这不是一个非此即彼的选择题。龙虾的灵活与牛马的坚持，在AI时代都不可或缺。</p>
+  </div>
+
+  <!-- 九 -->
+  <div class="section" id="s9">
+    <div class="section-num">九</div>
+    <h2>团队信息</h2>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>成员</th><th>学校</th><th>赛道</th><th>联系方式</th></tr></thead>
+        <tbody>
+          <tr><td><strong>赵天浩</strong></td><td>北京中关村学院</td><td>学术龙虾赛道</td><td>zthwhucs@gmail.com</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:20px;">代码仓库：<a href="https://github.com/happytianhao/PanelClaw" style="color:#3b82f6;">github.com/happytianhao/PanelClaw</a></p>
+  </div>
+
+</div>
+
+<footer>
+  <p>PanelClaw · 北纬·龙虾大赛（第一届）· OpenClaw Hackathon</p>
+  <p>主办方：中关村人工智能研究院</p>
+</footer>
+
+</body>
+</html>

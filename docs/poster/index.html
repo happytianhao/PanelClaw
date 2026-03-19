@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PanelClaw · 项目海报</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --bg2: #161b22;
+      --bg3: #21262d;
+      --accent: #7c3aed;
+      --accent2: #3b82f6;
+      --text: #e6edf3;
+      --text2: #8b949e;
+      --border: #30363d;
+      --green: #3fb950;
+      --red: #f85149;
+      --yellow: #d2a520;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #1a1a2e;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 32px 16px;
+      font-family: system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    }
+
+    .poster {
+      width: 794px;
+      min-height: 1123px;
+      background: var(--bg);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    }
+
+    /* Top glow */
+    .poster::before {
+      content: '';
+      position: absolute;
+      top: -120px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, rgba(124,58,237,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* ── Header ── */
+    .header {
+      padding: 36px 48px 28px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .contest-badge {
+      display: inline-block;
+      background: rgba(124,58,237,0.15);
+      border: 1px solid rgba(124,58,237,0.4);
+      color: #a78bfa;
+      padding: 5px 18px;
+      border-radius: 20px;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      margin-bottom: 18px;
+    }
+    .project-name {
+      font-size: 72px;
+      font-weight: 900;
+      letter-spacing: -3px;
+      line-height: 1;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #a78bfa 0%, #7c3aed 40%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .project-subtitle {
+      font-size: 18px;
+      color: var(--text2);
+      letter-spacing: 0.02em;
+    }
+    .panel-topic {
+      margin-top: 14px;
+      display: inline-block;
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.3);
+      color: #79c0ff;
+      padding: 6px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* ── Stats ── */
+    .stats-section {
+      padding: 28px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .stat-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 14px;
+      text-align: center;
+    }
+    .stat-emoji { font-size: 22px; margin-bottom: 8px; }
+    .stat-num {
+      font-size: 30px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #7c3aed, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.1;
+    }
+    .stat-label { font-size: 11px; color: var(--text2); margin-top: 5px; line-height: 1.4; }
+
+    /* ── Guests ── */
+    .guests-section {
+      padding: 24px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-heading {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+    .guests-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+    .guest-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 10px;
+      text-align: center;
+    }
+    .guest-card.host {
+      border-color: rgba(124,58,237,0.4);
+      background: rgba(124,58,237,0.07);
+    }
+    .guest-emoji { font-size: 26px; margin-bottom: 6px; }
+    .guest-name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .guest-role {
+      font-size: 10px;
+      color: var(--text2);
+      line-height: 1.4;
+    }
+    .guest-badge {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 9px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: rgba(124,58,237,0.15);
+      border: 1px solid rgba(124,58,237,0.3);
+      color: #a78bfa;
+    }
+    .guest-badge.en {
+      background: rgba(59,130,246,0.1);
+      border-color: rgba(59,130,246,0.3);
+      color: #79c0ff;
+    }
+    .guest-badge.lobster {
+      background: rgba(248,81,73,0.1);
+      border-color: rgba(248,81,73,0.3);
+      color: #ffa198;
+    }
+
+    /* ── Flow ── */
+    .flow-section {
+      padding: 24px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .flow-row {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 10px;
+      flex-wrap: nowrap;
+    }
+    .flow-node {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      text-align: center;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .flow-node.start { border-color: rgba(124,58,237,0.5); background: rgba(124,58,237,0.1); color: #a78bfa; }
+    .flow-node.end { border-color: rgba(59,130,246,0.5); background: rgba(59,130,246,0.1); color: #79c0ff; font-weight: 600; }
+    .flow-node small { display: block; color: var(--text2); font-size: 10px; margin-top: 2px; }
+    .flow-arrow { color: var(--text2); font-size: 14px; padding: 0 6px; flex-shrink: 0; }
+    .flow-sub {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      padding-left: 20px;
+    }
+
+    /* ── Features ── */
+    .features-section {
+      padding: 24px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .feature-item {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .feature-emoji { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .feature-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+    .feature-desc { font-size: 11px; color: var(--text2); line-height: 1.5; }
+
+    /* ── Questions ── */
+    .questions-section {
+      padding: 20px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .questions-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .question-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 16px;
+    }
+    .question-num {
+      font-size: 11px;
+      font-weight: 800;
+      color: #a78bfa;
+      background: rgba(124,58,237,0.15);
+      border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 6px;
+      padding: 2px 8px;
+      flex-shrink: 0;
+    }
+    .question-text { font-size: 13px; color: var(--text); flex: 1; }
+    .question-speakers { font-size: 10px; color: var(--text2); flex-shrink: 0; }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 22px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg2);
+    }
+    .footer-left { display: flex; flex-direction: column; }
+    .footer-name { font-size: 15px; font-weight: 700; color: var(--text); }
+    .footer-school { font-size: 12px; color: var(--text2); margin-top: 2px; }
+    .footer-right { text-align: right; }
+    .footer-github { font-size: 12px; color: #79c0ff; margin-bottom: 3px; }
+    .footer-email { font-size: 12px; color: var(--text2); }
+    .footer-logo {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, #7c3aed, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="poster">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="contest-badge">北纬·龙虾大赛（第一届）· OpenClaw Hackathon · 学术龙虾赛道 · 中关村人工智能研究院</div>
+    <div class="project-name">🦞 PanelClaw</div>
+    <div class="project-subtitle">AI龙虾自主学术圆桌，全程无人工干预</div>
+    <div class="panel-topic">Panel Discussion · 科研是需要龙虾还是牛马？</div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-emoji">🦞</div>
+        <div class="stat-num">5</div>
+        <div class="stat-label">位嘉宾<br>全部由龙虾扮演</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-emoji">❓</div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">个核心问题<br>层层递进</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-emoji">💬</div>
+        <div class="stat-num">40</div>
+        <div class="stat-label">个发言片段<br>完整对话脚本</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-emoji">⏱️</div>
+        <div class="stat-num">17min</div>
+        <div class="stat-label">全场时长<br>打字机逐字回放</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Guests -->
+  <div class="guests-section">
+    <div class="section-heading">嘉宾阵容（全部由 AI 龙虾扮演）</div>
+    <div class="guests-grid">
+      <div class="guest-card host">
+        <div class="guest-emoji">🎙️</div>
+        <div class="guest-name">郑书新</div>
+        <div class="guest-role">北京中关村学院副教授<br>中关村人工智能研究院副院长</div>
+        <div class="guest-badge">主持人</div>
+      </div>
+      <div class="guest-card">
+        <div class="guest-emoji">🦞</div>
+        <div class="guest-name">李飞飞</div>
+        <div class="guest-role">Stanford教授<br>HAI联合院长<br>World Labs联合创始人</div>
+        <div class="guest-badge">中文发言</div>
+      </div>
+      <div class="guest-card">
+        <div class="guest-emoji">🦞</div>
+        <div class="guest-name">何恺明</div>
+        <div class="guest-role">MIT CSAIL助理教授<br>前Meta FAIR<br>ResNet / MAE</div>
+        <div class="guest-badge">中文发言</div>
+      </div>
+      <div class="guest-card">
+        <div class="guest-emoji">🦞</div>
+        <div class="guest-name">Sam Altman</div>
+        <div class="guest-role">OpenAI CEO<br>AGI路线图<br>AI产品化</div>
+        <div class="guest-badge en">English Only</div>
+      </div>
+      <div class="guest-card">
+        <div class="guest-emoji">🦞</div>
+        <div class="guest-name">OpenClaw龙虾</div>
+        <div class="guest-role">本届Hackathon吉祥物<br>龙虾视角看学术圈<br>咔咔咔</div>
+        <div class="guest-badge lobster">虚构角色</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flow -->
+  <div class="flow-section">
+    <div class="section-heading">系统流程</div>
+    <div class="flow-row">
+      <div class="flow-node start">各龙虾智能体<br><small>自主发言</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">panel_script.json<small>完整对话脚本</small></div>
+      <div class="flow-arrow">←</div>
+      <div class="flow-node">speakers.json<small>嘉宾信息</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">打字机回放播放器<small>播放/暂停/跳转</small></div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node end">观众观看<br><small>全程回放</small></div>
+    </div>
+    <div class="flow-sub">
+      <div class="flow-node" style="background:var(--bg3);color:var(--text2);font-size:11px;padding:7px 12px;">Panel结束后</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node" style="background:rgba(63,185,80,0.08);border-color:rgba(63,185,80,0.3);color:#3fb950;font-size:11px;padding:7px 12px;">AI秘书龙虾生成总结报告 🦞</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node" style="background:rgba(59,130,246,0.1);border-color:rgba(59,130,246,0.3);color:#79c0ff;font-size:11px;padding:7px 12px;">report_*.json 输出 📄</div>
+    </div>
+  </div>
+
+  <!-- Features -->
+  <div class="features-section">
+    <div class="section-heading">核心功能</div>
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-emoji">🤖</div>
+        <div>
+          <div class="feature-title">多智能体自主Panel</div>
+          <div class="feature-desc">每只龙虾独立扮演角色，自主发言，无人工干预</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-emoji">⌨️</div>
+        <div>
+          <div class="feature-title">打字机动画逐字回放</div>
+          <div class="feature-desc">支持播放/暂停，中英文混排速度自适应</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-emoji">🎚️</div>
+        <div>
+          <div class="feature-title">进度条可拖拽跳转</div>
+          <div class="feature-desc">基于segment_id精确定位，随时跳转任意片段</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-emoji">📖</div>
+        <div>
+          <div class="feature-title">全展开模式</div>
+          <div class="feature-desc">一键展开全部发言，不播放动画，快速浏览全文</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-emoji">📋</div>
+        <div>
+          <div class="feature-title">AI秘书龙虾总结报告</div>
+          <div class="feature-desc">自动生成结构化JSON报告，含金句与要点摘录</div>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-emoji">🚀</div>
+        <div>
+          <div class="feature-title">纯静态部署</div>
+          <div class="feature-desc">零后端依赖，GitHub Pages一键部署，fetch读取数据</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Questions -->
+  <div class="questions-section">
+    <div class="section-heading">Panel 议程</div>
+    <div class="questions-list">
+      <div class="question-item">
+        <div class="question-num">Q1</div>
+        <div class="question-text">科研需要的是龙虾还是牛马？</div>
+        <div class="question-speakers">郑书新 → 李飞飞 → 何恺明 → Sam → 🦞</div>
+      </div>
+      <div class="question-item">
+        <div class="question-num">Q2</div>
+        <div class="question-text">AI 会取代科研工作者吗？</div>
+        <div class="question-speakers">郑书新 → Sam → 何恺明 → 李飞飞 → 🦞</div>
+      </div>
+      <div class="question-item">
+        <div class="question-num">Q3</div>
+        <div class="question-text">什么样的科研环境才能孵化出真正的创新？</div>
+        <div class="question-speakers">郑书新 → 李飞飞 → 🦞 → 何恺明 → Sam</div>
+      </div>
+      <div class="question-item">
+        <div class="question-num">Q4</div>
+        <div class="question-text">给年轻研究者的一句话建议</div>
+        <div class="question-speakers">郑书新 → 🦞 → Sam → 何恺明 → 李飞飞 → 郑书新</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-left">
+      <div class="footer-name">赵天浩</div>
+      <div class="footer-school">北京中关村学院 · 学术龙虾赛道</div>
+    </div>
+    <div class="footer-logo">🦞 PanelClaw</div>
+    <div class="footer-right">
+      <div class="footer-github">github.com/happytianhao/PanelClaw</div>
+      <div class="footer-email">zthwhucs@gmail.com</div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
