@@ -595,7 +595,7 @@ document.querySelectorAll('.speed-btn').forEach(btn => {
 // ──────────────────────────────────────────────
 async function init() {
   try {
-    const res = await fetch('../data/panel_script.json');
+    const res = await fetch('./data/panel_script.json');
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     scriptData = await res.json();
 
