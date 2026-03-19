@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel 总结报告 · PanelClaw</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --bg2: #161b22;
+      --bg3: #21262d;
+      --accent: #7c3aed;
+      --accent2: #3b82f6;
+      --text: #e6edf3;
+      --text2: #8b949e;
+      --border: #30363d;
+      --green: #3fb950;
+      --yellow: #d2a520;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      min-height: 100vh;
+      padding: 32px 16px 64px;
+    }
+    .container { max-width: 800px; margin: 0 auto; }
+
+    /* Nav */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+    .nav-logo {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #a78bfa, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+    .nav-back {
+      font-size: 13px;
+      color: var(--text2);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 5px 14px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .nav-back:hover { border-color: var(--accent); color: var(--text); }
+
+    /* Header */
+    .report-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .report-badge {
+      display: inline-block;
+      background: rgba(63,185,80,0.1);
+      border: 1px solid rgba(63,185,80,0.3);
+      color: #3fb950;
+      padding: 4px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-bottom: 16px;
+    }
+    .report-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .report-subtitle {
+      font-size: 15px;
+      color: var(--text2);
+      margin-bottom: 16px;
+    }
+    .report-meta {
+      font-size: 12px;
+      color: var(--text2);
+    }
+
+    /* Summary box */
+    .summary-box {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text);
+    }
+    .summary-box strong { color: #a78bfa; }
+
+    /* Section */
+    .section { margin-bottom: 32px; }
+    .section-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+
+    /* Question block */
+    .question-block {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .question-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg3);
+    }
+    .question-num {
+      font-size: 11px;
+      font-weight: 800;
+      color: #a78bfa;
+      background: rgba(124,58,237,0.15);
+      border: 1px solid rgba(124,58,237,0.3);
+      border-radius: 6px;
+      padding: 2px 10px;
+      flex-shrink: 0;
+    }
+    .question-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .highlights-list { padding: 14px 20px; display: flex; flex-direction: column; gap: 10px; }
+    .highlight-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .highlight-speaker {
+      font-weight: 700;
+      flex-shrink: 0;
+      min-width: 72px;
+    }
+    .highlight-text { color: var(--text2); }
+
+    /* Quotes */
+    .quotes-grid { display: flex; flex-direction: column; gap: 14px; }
+    .quote-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+    }
+    .quote-text {
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text);
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+    .quote-text::before { content: '"'; color: var(--accent); font-size: 18px; font-style: normal; }
+    .quote-text::after { content: '"'; color: var(--accent); font-size: 18px; font-style: normal; }
+    .quote-author {
+      font-size: 12px;
+      color: var(--text2);
+      text-align: right;
+    }
+    .quote-author span { color: var(--text); font-weight: 600; }
+
+    /* Clash */
+    .clash-list { display: flex; flex-direction: column; gap: 10px; }
+    .clash-item {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+    .clash-item strong { color: var(--yellow); }
+
+    /* Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .stat-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #7c3aed, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
+    }
+    .stat-label { font-size: 11px; color: var(--text2); margin-top: 4px; }
+
+    /* Footer */
+    .report-footer {
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--text2);
+      text-align: center;
+      line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <nav class="nav">
+    <a class="nav-logo" href="../">🦞 PanelClaw</a>
+    <a class="nav-back" href="../">← 返回主页</a>
+  </nav>
+
+  <div class="report-header">
+    <div class="report-badge">🦞 AI 秘书龙虾生成</div>
+    <div class="report-title">Panel 总结报告</div>
+    <div class="report-subtitle">Panel Discussion · 科研是需要龙虾还是牛马？</div>
+    <div class="report-meta">生成时间：2026-03-19 &nbsp;·&nbsp; PanelClaw · OpenClaw Hackathon</div>
+  </div>
+
+  <div class="summary-box">
+    本次 PanelClaw 学术圆桌全程无人和稀泥。四位嘉宾围绕「科研是需要龙虾还是牛马？」展开真实交锋，核心争议集中在三条断层线：执行与创意能否分离、AI 是否会强化错误激励机制、学术体制是否已结构性落后于大型 AI 实验室。<br><br>
+    <strong>没有共识，只有立场。</strong>主持人郑书新最终总结：科研最需要的，是敢说真话的人。
+  </div>
+
+  <!-- Questions -->
+  <div class="section">
+    <div class="section-title">Panel 议程与观点摘要</div>
+
+    <div class="question-block">
+      <div class="question-header">
+        <div class="question-num">Q1</div>
+        <div class="question-text">科研需要的是龙虾还是牛马？</div>
+      </div>
+      <div class="highlights-list">
+        <div class="highlight-item">
+          <div class="highlight-speaker" style="color:#f48fb1">李飞飞</div>
+          <div class="highlight-text">明确站队龙虾，强调的是「对问题本质的执念」，批评牛马思维时间尺度只有季度而非十年</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-speaker" style="color:#a5d6a7">何恺明</div>
+          <div class="highlight-text">直接反驳李飞飞，认为龙虾 vs 牛马是伪命题，ResNet 和 MAE 背后都是大量消融实验，批评「科研浪漫主义」害人不浅</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-speaker" style="color:#ffe082">Sam Altman</div>
+          <div class="highlight-text">跳出框架，认为这个问题本身已过时——AI 正在取代科研执行层，真正的问题是你在哪个抽象层次上工作</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-speaker" style="color:#ff8a65">OpenClaw 🦞</div>
+          <div class="highlight-text">用「脱壳」隐喻切入，指出科研圈真正的问题是没人愿意放弃旧框架，追问：你研究的问题，到底是你自己选的吗？</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-header">
+        <div class="question-num">Q2</div>
+        <div class="question-text">AI 会取代科研工作者吗？</div>
+      </div>
+      <div class="highlights-list">
+        <div class="highlight-item">
+          <div class="highlight-speaker" style="color:#ffe082">Sam Altman</div>
+          <div class="highlight-text">提出「80/20」框架：AI 将取代执行层的 80%，直言很多人从未真正做过那 20%，AI 来了只会暴露这个事实</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-speaker" style="color:#a5d6a7">何恺明</div>
+          <div class="highlight-text">正面挑战这一框架：执行与创意深度耦合，靠「盯 loss 曲线」磨出的直觉无法被跳过，担忧 AI 培养出「会提问但不会验证」的一代</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-speaker" style="color:#f48fb1">李飞飞</div>
+          <div class="highlight-text">从权力结构切入：AI 工具高度集中在少数公司，「AI 扩展科研能力」的叙事背后是谁来掌控科学议程的问题</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-speaker" style="color:#ff8a65">OpenClaw 🦞</div>
+          <div class="highlight-text">学术垃圾被 AI 取代是好事；真正的危险是 AI 强化错误激励机制，让「快速产出」更容易、让「十年磨一剑」更边缘化</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-header">
+        <div class="question-num">Q3</div>
+        <div class="question-text">什么样的科研环境才能孵化出真正的创新？</div>
+      </div>
+      <div class="highlights-list">
+        <div class="highlight-item">
+          <div class="highlight-speaker" style="color:#f48fb1">李飞飞</div>
+          <div class="highlight-text">提出三条具体改革：五年一评、强制 30% 无目标研究、正视导师剥削文化，直言这是「系统性结构问题」</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-speaker" style="color:#ff8a65">OpenClaw 🦞</div>
+          <div class="highlight-text">用贝尔实验室的衰亡反驳「设计完美环境」的思路，指出学生的沉默共谋也是问题的一部分</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-speaker" style="color:#a5d6a7">何恺明</div>
+          <div class="highlight-text">中国科研核心问题是「跟风」而非资源不足，追问李飞飞：五年一评如果评的还是论文数量，换汤不换药</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-speaker" style="color:#ffe082">Sam Altman</div>
+          <div class="highlight-text">直接挑战学术体制：大型 AI 实验室在资源、速度、人才上已全面优于高校，建议年轻研究者认真考虑是否还该去大学</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="question-header">
+        <div class="question-num">Q4</div>
+        <div class="question-text">给年轻研究者的一句话建议</div>
+      </div>
+      <div class="highlights-list">
+        <div class="highlight-item">
+          <div class="highlight-speaker" style="color:#ff8a65">OpenClaw 🦞</div>
+          <div class="highlight-text">找到一个让你睡不着觉的问题，然后死死咬住它，不管别人觉得它重不重要</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-speaker" style="color:#ffe082">Sam Altman</div>
+          <div class="highlight-text">Work on the most important problem you can imagine—not the most publishable, not the most fashionable, not the one your advisor thinks is safe</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-speaker" style="color:#a5d6a7">何恺明</div>
+          <div class="highlight-text">把最感兴趣的论文从零复现一遍——不是跑代码，是从零写代码，你会发现你根本没理解它</div>
+        </div>
+        <div class="highlight-item">
+          <div class="highlight-speaker" style="color:#f48fb1">李飞飞</div>
+          <div class="highlight-text">记住你为什么开始做科研，不是为了论文，而是因为有什么东西让你觉得这个世界还没被完全理解</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quotes -->
+  <div class="section">
+    <div class="section-title">金句摘录</div>
+    <div class="quotes-grid">
+      <div class="quote-card">
+        <div class="quote-text">牛马思维永远看不到这一点，因为它的时间尺度是季度，而科研的时间尺度是十年。</div>
+        <div class="quote-author">— <span>李飞飞</span></div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">科研的浪漫主义是一种很危险的东西，它让人觉得自己在做重要的事，但其实什么都没做。</div>
+        <div class="quote-author">— <span>何恺明</span></div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">When AI eliminates the 80%, those people will discover they don't actually know how to do the 20%. That's not a criticism—it's a structural problem with how we train researchers.</div>
+        <div class="quote-author">— <span>Sam Altman</span></div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">真正的突破，都发生在你把旧的框架脱掉、新的还没长出来的那段时间。那段时间你什么保护都没有，随时可能被吃掉。</div>
+        <div class="quote-author">— <span>OpenClaw 龙虾</span></div>
+      </div>
+      <div class="quote-card">
+        <div class="quote-text">科研需要龙虾还是牛马？我现在的答案是：需要敢说真话、敢做判断、敢在不完美的环境里坚持下去的人。</div>
+        <div class="quote-author">— <span>郑书新</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Clashes -->
+  <div class="section">
+    <div class="section-title">观点碰撞</div>
+    <div class="clash-list">
+      <div class="clash-item"><strong>Sam Altman 的「80/20」框架 vs 李飞飞和何恺明：</strong>执行层是否可以外包给 AI，还是执行本身就是建立直觉的过程</div>
+      <div class="clash-item"><strong>李飞飞的制度改革方案 vs 何恺明：</strong>五年一评如果评的还是论文数量，是否换汤不换药</div>
+      <div class="clash-item"><strong>Sam Altman vs 其余三位：</strong>学术体制是否已结构性落后，年轻研究者是否还该去大学</div>
+      <div class="clash-item"><strong>OpenClaw 龙虾的核心判断：</strong>AI 强化错误激励机制，让「快速产出」更容易、让「十年磨一剑」更边缘——这一点无人正面反驳</div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="section">
+    <div class="section-title">数据统计</div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">40</div>
+        <div class="stat-label">发言片段总数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">4</div>
+        <div class="stat-label">核心问题数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">5</div>
+        <div class="stat-label">参与嘉宾数</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">40s</div>
+        <div class="stat-label">平均每段时长</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">27min</div>
+        <div class="stat-label">全场预估时长</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">龙虾自主发言</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="report-footer">
+    本报告由 AI 秘书龙虾自动生成 · 所有发言内容为虚构创作，不代表真实人物观点<br>
+    PanelClaw · 北纬·龙虾大赛（第一届）· OpenClaw Hackathon · 学术龙虾赛道
+  </div>
+
+</div>
+</body>
+</html>

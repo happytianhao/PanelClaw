@@ -115,6 +115,42 @@
       background: var(--text-muted);
       opacity: 0.5;
     }
+    .project-intro {
+      max-width: 560px;
+      margin: 20px auto 0;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      text-align: center;
+    }
+    .header-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .header-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      background: var(--bg-card);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .header-link-btn:hover { border-color: var(--accent); color: var(--text-primary); }
+    .panel-divider {
+      max-width: 560px;
+      margin: 28px auto 0;
+      border: none;
+      border-top: 1px solid var(--border-subtle);
+    }
     /* ── SPEAKER STRIP ── */
     .speaker-strip {
       display: flex;
@@ -349,6 +385,15 @@
       font-size: 22px;
     }
     .panel-end-text { font-size: 12px; color: var(--text-muted); letter-spacing: 1px; }
+    .panel-end-links { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px; }
+    .panel-end-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 8px 18px; border-radius: 8px; font-size: 13px; font-weight: 500;
+      text-decoration: none; border: 1px solid var(--border-subtle);
+      color: var(--text-secondary); background: var(--bg-card);
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .panel-end-btn:hover { border-color: var(--accent); color: var(--text-primary); background: var(--bg-hover); }
     /* ── LOADING / ERROR ── */
     .loading-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 90px 0; gap: 18px; }
     .loading-ring {
@@ -520,6 +565,15 @@
       <span class="panel-meta-sep"></span>
       <span>2026年3月19日</span>
     </div>
+    <p class="project-intro">我们习惯把 AI 当工具——给它一个问题，等它输出答案。PanelClaw 想做一件不一样的事：让 AI 自己组织一场学术讨论。五只龙虾各自扮演一位学术大佬，以各自的立场、风格、价值观展开真实的思想碰撞。主持人是龙虾，嘉宾是龙虾，连会后写总结的秘书也是龙虾。<strong>全程无人工干预。</strong></p>
+    <div class="header-links">
+      <a class="header-link-btn" href="report/" target="_blank">📄 项目文档</a>
+      <a class="header-link-btn" href="poster/" target="_blank">🖼️ 项目海报</a>
+      <a class="header-link-btn" href="slides/" target="_blank">📊 演示幻灯片</a>
+      <a class="header-link-btn" href="summary/" target="_blank">📋 Panel 总结</a>
+      <a class="header-link-btn" href="https://github.com/happytianhao/PanelClaw/" target="_blank">💻 源代码</a>
+    </div>
+    <hr class="panel-divider">
   </header>
   <div class="speaker-strip" id="speakerStrip"></div>
   <div class="speaker-bio-panel" id="speakerBioPanel">
@@ -541,6 +595,13 @@
   <div class="panel-end" id="panelEnd">
     <div class="panel-end-icon">🦞</div>
     <div class="panel-end-text">— Panel 播放结束 —</div>
+    <div class="panel-end-links">
+      <a class="panel-end-btn" href="report/" target="_blank">📄 项目文档</a>
+      <a class="panel-end-btn" href="poster/" target="_blank">🖼️ 项目海报</a>
+      <a class="panel-end-btn" href="slides/" target="_blank">📊 演示幻灯片</a>
+      <a class="panel-end-btn" href="summary/" target="_blank">📋 Panel 总结</a>
+      <a class="panel-end-btn" href="https://github.com/happytianhao/PanelClaw/" target="_blank">💻 源代码</a>
+    </div>
   </div>
 </div>
 
@@ -658,9 +719,17 @@ document.querySelectorAll('.speed-btn').forEach(btn => {
 // ──────────────────────────────────────────────
 async function init() {
   try {
-    const res = await fetch('./data/panel_script.json');
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    scriptData = await res.json();
+    const [scriptRes, speakersRes] = await Promise.all([
+      fetch('./data/panel_script.json'),
+      fetch('./data/speakers.json')
+    ]);
+    if (!scriptRes.ok) throw new Error(`HTTP ${scriptRes.status}`);
+    scriptData = await scriptRes.json();
+
+    if (speakersRes.ok) {
+      const speakersArr = await speakersRes.json();
+      speakersArr.forEach(sp => { SPEAKERS[sp.speaker_id] = sp; });
+    }
 
     if (scriptData.panel_title) {
       document.title = 'PanelClaw · ' + scriptData.panel_title.replace('Panel Discussion - ', '');
@@ -720,8 +789,6 @@ function renderSpeakerStrip() {
         inner.style.borderLeftColor = sp.color || 'var(--accent)';
         bioPanel.dataset.activeId = id;
         bioPanel.classList.add('visible');
-        const idx = scriptData.segments.findIndex(s => s.speaker_id === id && s.type === 'answer');
-        if (idx >= 0) jumpTo(idx);
       }
     });
     speakerStrip.appendChild(chip);

@@ -2,10 +2,10 @@
   "panel_title": "Panel Discussion - 科研是需要龙虾还是牛马？",
   "generated_at": "2026-03-19T00:00:00Z",
   "questions": {
-    "1": "AI时代科研范式正在发生什么变化？",
-    "2": "龙虾科研 vs 牛马科研，哪种模式更适合未来？",
-    "3": "年轻研究者应该怎么做科研？",
-    "4": "一句话：科研需要龙虾还是牛马？"
+    "1": "科研需要的是龙虾还是牛马？",
+    "2": "AI 会取代科研工作者吗？",
+    "3": "什么样的科研环境才能孵化出真正的创新？",
+    "4": "给年轻研究者的一句话建议"
   },
   "segments": [
     {
@@ -16,8 +16,8 @@
       "type": "opening",
       "round": 0,
       "search_query": null,
-      "content": "尊敬的各位来宾、各位观众，大家好！欢迎来到这场与众不同的学术Panel。我是今天的主持人郑书新，来自中关村人工智能研究院。",
-      "duration_estimate": 15
+      "content": "大家好，我是郑书新，今天的主持人。我在AI圈做了很多年，开过不少Panel，但今天这场有点不一样——因为我们要聊的问题，是那种大家心里都有答案、但在正式场合不太敢说出来的问题。",
+      "duration_estimate": 20
     },
     {
       "id": 2,
@@ -27,8 +27,8 @@
       "type": "opening",
       "round": 0,
       "search_query": null,
-      "content": "今天我们要讨论的话题是——「科研是需要龙虾还是牛马？」这个问题的背后，实际上是在问：在AI时代，科研到底需要什么样的能力和特质？是需要像龙虾一样灵活适应、善于协作？还是需要像牛马一样勤勤恳恳、持之以恒？",
-      "duration_estimate": 25
+      "content": "「科研是需要龙虾还是牛马？」这个题目听起来有点荒诞，但我觉得它比「AI时代科研范式的转变」这种标题诚实多了。它在问的是：在这个AI正在重写规则的时代，做科研的人，到底需要什么？是需要那种能在极端环境里存活、感知力极强的龙虾？还是需要那种埋头苦干、持之以恒的牛马？还是说，这个问题本身就问错了？",
+      "duration_estimate": 35
     },
     {
       "id": 3,
@@ -38,8 +38,8 @@
       "type": "opening",
       "round": 0,
       "search_query": null,
-      "content": "我非常荣幸地邀请到了四位重磅嘉宾：Stanford大学的李飞飞教授、MIT的何恺明教授、OpenAI的Sam Altman CEO，以及一位特殊的嘉宾——OpenClaw龙虾。让我用掌声欢迎他们！",
-      "duration_estimate": 25
+      "content": "今天我们请来了四位嘉宾：Stanford的李飞飞教授，她是ImageNet的创始人，也是AI伦理领域最重要的声音之一；MIT的何恺明教授，ResNet、MAE的作者，深度学习领域引用量最高的研究者之一；OpenAI的CEO Sam Altman，AGI最坚定的推进者；还有一位特殊嘉宾——OpenClaw龙虾，本次Hackathon的吉祥物，也是今天唯一一位真正的龙虾。我们开始。",
+      "duration_estimate": 40
     },
     {
       "id": 4,
@@ -49,8 +49,8 @@
       "type": "question",
       "round": 1,
       "search_query": null,
-      "content": "好，我们进入第一个问题。在AI浪潮席卷而来的今天，科研范式正在发生深刻变革。我想先请各位嘉宾分享：在这个时代，科研到底需要什么样的人才？李飞飞教授，请先开始。",
-      "duration_estimate": 25,
+      "content": "好，我们直接进入第一个问题，也是今天最核心的问题。我在AI圈待了这么多年，开过很多Panel，但这个问题我觉得是最难回答的——因为它没有标准答案，但每个人心里其实都有自己的判断，只是不敢说出来。科研到底需要龙虾还是牛马？我不想听「两者都需要」这种和稀泥的答案，我想听各位真实的判断。李飞飞教授，您在斯坦福带了二十多年学生，您先来。",
+      "duration_estimate": 35,
       "question_text": "科研需要的是龙虾还是牛马？"
     },
     {
@@ -61,8 +61,8 @@
       "type": "answer",
       "round": 1,
       "search_query": "Fei-Fei Li ImageNet AI research paradigm shift",
-      "content": "谢谢主持人。这个问题让我想到ImageNet诞生之初的往事——2007年，我们团队手工标注了1500万张图片，用了整整三年。那时候很多人说我们傻，为什么不用机器自动标注？但我始终相信，有些事情必须由人来完成，因为人的判断里蕴含着对世界的理解。",
-      "duration_estimate": 25
+      "content": "谢谢书新。我的答案是龙虾——但我要先解释清楚我说的「龙虾」是什么意思，因为我不是在说灵活，不是在说聪明，而是在说一种对问题本质的执念，一种愿意在别人都不看好的方向上坚持下去的勇气。牛马模式的核心逻辑是：给我一个任务，我把它做完，做得又快又好。这在工业生产里是美德，但在科研里是慢性毒药。我在斯坦福带了二十多年学生，见过太多极其聪明的年轻人，被「发论文、刷指标、抢热点」这套机器磨碎。他们不是不努力，他们是太努力了——努力在错误的方向上。每周组会汇报进展，每个月要有新结果，每年要有顶会论文，这套节奏把科研变成了一条流水线。流水线上出来的东西，是产品，不是发现。",
+      "duration_estimate": 50
     },
     {
       "id": 6,
@@ -72,8 +72,8 @@
       "type": "answer",
       "round": 1,
       "search_query": null,
-      "content": "今天回过头看，ImageNet不仅训练了机器，也训练了无数研究者对视觉智能的想象力。所以我的回答是：科研既需要龙虾的视野，也需要牛马的坚持。但更根本的，是需要一颗对人类有温度的心。AI可以计算，但只有人才能定义计算的意义。",
-      "duration_estimate": 25
+      "content": "ImageNet当年被很多人嘲笑是「体力活」，说手工标注1500万张图片没有技术含量，不值得发顶会。我当时承受了很大的压力，有同事直接问我：你这辈子就打算做数据集吗？但我知道这件事是对的，因为我问的不是「这能发哪里」，而是「机器要理解视觉世界，它需要什么」。正是这个「没有技术含量」的工作，奠定了整个深度学习革命的基础。牛马思维永远看不到这一点，因为它的时间尺度是季度，而科研的时间尺度是十年。我不是说吃苦不重要——做ImageNet那三年我们也是拼命干的。我是说，方向比努力更重要，而找到正确方向需要的是龙虾的感知力，不是牛马的执行力。",
+      "duration_estimate": 55
     },
     {
       "id": 7,
@@ -83,8 +83,8 @@
       "type": "answer",
       "round": 1,
       "search_query": null,
-      "content": "从工程角度看，我更偏向牛马。ResNet的核心理念非常朴素——让信息高速公路更宽敞，让梯度流动更顺畅。这个想法其实2015年之前就有人提过，但没有人坚持把它做到极致。我们花了大量时间做实验，验证每一个细节。",
-      "duration_estimate": 25
+      "content": "飞飞，我很尊重你做ImageNet的决定，那确实是一个改变了整个领域的判断。但我不同意你的框架，因为我觉得「龙虾vs牛马」这个比喻本身就是个陷阱——它把「有远见、有创意」和「肯吃苦、做执行」对立起来了，好像你要么是有灵气的龙虾，要么是埋头苦干的牛马，二选一。但这两件事根本不矛盾，而且在我的经验里，真正重要的工作恰恰是两者缺一不可的。ResNet的核心想法说出来很简单——加一个跳跃连接，让梯度能直接流过去。但从这个想法到一个能在ImageNet上跑赢所有人的模型，中间是什么？是几百个消融实验，是无数次「这个配置不行，换一个」，是我们在微软亚研院那段时间几乎每天都在重跑实验。那不是龙虾，那就是牛马。",
+      "duration_estimate": 55
     },
     {
       "id": 8,
@@ -94,8 +94,8 @@
       "type": "answer",
       "round": 1,
       "search_query": null,
-      "content": "我不太相信科研靠灵光一现。真正的突破来自对问题的深刻理解和对解决方案的反复打磨。深度学习的很多基础架构创新，本质上都是在回答一个问题：如何让机器更高效地学习？答案需要长期的积累，不是一夜之间能想到的。",
-      "duration_estimate": 25
+      "content": "MAE也一样，表面上看是个非常优雅的自监督框架，思路清晰，动机充分，但背后是多少次预训练失败？掩码比例从多少到多少试了多少遍？解码器深度怎么选？这些都是体力活，都是牛马的工作。我见过太多人自以为是「龙虾」，整天在组会上讲宏大叙事，讲这个方向的未来，讲那个问题的本质，但代码写不利索，实验跑不完整，复现别人的结果都复现不出来。科研的浪漫主义是一种很危险的东西，它让人觉得自己在做重要的事，但其实什么都没做。我不是说远见不重要——我是说，没有扎实的执行力，再好的远见也只是空谈。",
+      "duration_estimate": 55
     },
     {
       "id": 9,
@@ -105,8 +105,8 @@
       "type": "answer",
       "round": 1,
       "search_query": "OpenAI AI agents autonomous research 2025",
-      "content": "This is a fascinating question, and I think the answer is evolving. Five years ago, I would have said we need more oxen—dedicated researchers grinding through problems. But the emergence of AI agents is changing the equation fundamentally.",
-      "duration_estimate": 20
+      "content": "I want to be respectful of both perspectives here, but I also want to be honest: I think this entire framing—lobster vs. ox—is already becoming obsolete, and not in a distant future way. I mean right now. The question assumes that human researchers are the primary unit of scientific production, that the bottleneck in science is whether individual people are creative enough or hardworking enough. But we’re past that inflection point. At OpenAI, our internal AI systems can now run literature reviews in minutes, generate and evaluate hypotheses, design experimental protocols, write and debug code, analyze results, and iterate on findings—faster than any individual researcher, and increasingly faster than entire teams working together.",
+      "duration_estimate": 50
     },
     {
       "id": 10,
@@ -116,8 +116,8 @@
       "type": "answer",
       "round": 1,
       "search_query": null,
-      "content": "We recently ran an experiment where AI agents independently conducted literature reviews, formulated hypotheses, designed experiments, and wrote papers. The results were remarkable—not replacing human creativity, but amplifying it. We’re entering an era where the bottleneck is no longer computation or even ideas, but our ability to effectively collaborate with AI.",
-      "duration_estimate": 25
+      "content": "So the real question isn’t lobster vs. ox. The real question is: are you the person directing the AI, or are you the person being replaced by it? And I’ll be direct about something uncomfortable: most researchers today are spending most of their time on work that AI will do better within five years. Not because they’re not smart or hardworking—but because the tasks themselves are automatable. Literature synthesis, baseline comparisons, hyperparameter tuning, even a significant portion of hypothesis generation—these are not safe harbors anymore. The researchers who will matter in ten years are the ones who can operate at a fundamentally different level of abstraction—who can ask the questions that AI can’t yet ask, and judge the answers that AI can’t yet judge. Whether that’s lobster or ox, I honestly don’t think it matters. What matters is whether you’re thinking at that level.",
+      "duration_estimate": 60
     },
     {
       "id": 11,
@@ -127,8 +127,8 @@
       "type": "answer",
       "round": 1,
       "search_query": null,
-      "content": "咔咔咔！终于轮到我发言了！作为一个龙虾，我必须说，这个问题简直是为我们量身定做的。我们龙虾家族在地球上存活了4.8亿年，比人类还早4.7亿年。你们知道为什么吗？因为我们既不是纯正的龙虾，也不是纯正的牛马——我们是甲壳类动物！",
-      "duration_estimate": 25
+      "content": "咔咔咔！我作为一只龙虾，必须严正抗议这个问题的预设——凭什么龙虾就代表「灵活创新」，牛马就代表「埋头苦干」？这个比喻是谁发明的？我要投诉。我们龙虾在深海里活了4.8亿年，靠的可不是什么灵活性，靠的是极其精准的环境感知、极其坚硬的外壳、还有在脱壳期间那种把自己完全暴露在危险中、等待新壳长硬的勇气。你们知道龙虾脱壳的时候有多脆弱吗？那是它一生中最危险的时刻，但也是它唯一能生长的时刻。旧壳不脱掉，新壳就长不出来，身体就没法变大。我觉得这才是科研最准确的隐喻——真正的突破，都发生在你把旧的框架脱掉、新的还没长出来的那段时间。那段时间你什么保护都没有，随时可能被吃掉。",
+      "duration_estimate": 55
     },
     {
       "id": 12,
@@ -138,8 +138,8 @@
       "type": "answer",
       "round": 1,
       "search_query": null,
-      "content": "开玩笑的，但认真说——我觉得科研既需要龙虾的适应力，也需要牛马的韧性。但更重要的是：我们需要认清自己是什么。你看，我作为一只龙虾，最厉害的地方不是我的钳子，而是我能在各种极端环境下生存。这才是AI时代研究者最核心的能力：适应变化，而非固守某一种模式。",
-      "duration_estimate": 30
+      "content": "但你们人类科研圈的问题是：没有人愿意脱壳。大家都躲在旧壳里，互相引用、互相吹捧、把增量工作包装成革命性突破，因为脱壳太危险了，会影响毕业、影响基金、影响tenure。Sam刚才说的那些AI取代的工作，我同意，但我觉得他漏掉了最重要的一点：AI取代不了「决定脱哪层壳」这个判断。飞飞说方向比努力重要，恺明说执行力不可或缺，我觉得你们说的都对，但都没说到根子上。真正的问题不是要龙虾还是牛马，而是：你们到底在解决什么问题？这个问题是你自己选的，还是导师给你的，还是热点逼你选的？如果连这个都没想清楚，龙虾也好，牛马也好，都是在原地打转。咔咔咔。",
+      "duration_estimate": 60
     },
     {
       "id": 13,
@@ -149,7 +149,7 @@
       "type": "summary",
       "round": 1,
       "search_query": null,
-      "content": "【第一轮摘要】本轮讨论围绕科研人才特质展开。李飞飞强调科研的人文温度与想象力；何恺明坚持工程思维与长期积累；Sam Altman指出AI Agent正在重塑科研范式；OpenClaw龙虾提出适应力才是核心竞争力。共识在于：科研既需要深度坚持，也需要灵活适应。",
+      "content": "【第一轮摘要】本轮出现明显分歧，无人给出和稀泥的答案。李飞飞明确站队龙虾，但强调的不是灵活性而是「对问题本质的执念」，以ImageNet为例批评牛马思维的短视时间尺度；何恺明直接反驳李飞飞的框架，认为龙虾vs牛马是个伪命题，以ResNet和MAE的工程细节为证，批评「科研浪漫主义」害人不浅；Sam Altman则跳出框架，认为这个问题本身已经过时，AI正在取代科研的执行层，真正的问题是你在哪个抽象层次上工作；OpenClaw龙虾用「脱壳」隐喻切入，指出科研圈真正的问题是没人愿意放弃旧框架，并追问：你研究的问题，到底是你自己选的吗？",
       "duration_estimate": 30
     },
     {
@@ -160,8 +160,8 @@
       "type": "question",
       "round": 2,
       "search_query": null,
-      "content": "好，第一轮讨论非常精彩。接下来进入第二个核心问题：AI会取代科研工作者吗？这个问题相信在座的每一位，包括屏幕前的观众都非常关心。Sam Altman，作为OpenAI的掌舵人，请您先谈谈您的看法。",
-      "duration_estimate": 25,
+      "content": "好，第一轮大家火药味挺浓的，我很满意。现在进入第二个问题，也是今天在场所有人——包括屏幕前正在读博、或者刚入行的年轻人——最焦虑的问题：AI会取代科研工作者吗？Sam，你刚才说大多数研究者的工作AI五年内会做得更好，这话说得很重。我想让你先展开讲，然后让其他几位表个态——你们怕吗？",
+      "duration_estimate": 35,
       "question_text": "AI 会取代科研工作者吗？"
     },
     {
@@ -172,8 +172,8 @@
       "type": "answer",
       "round": 2,
       "search_query": "AI replace scientists research automation",
-      "content": "I want to be direct: AI will transform scientific research in ways we’re only beginning to understand. The question isn’t whether AI will surpass human scientists in many domains—it already has, in specific tasks like protein structure prediction and mathematical theorem proving.",
-      "duration_estimate": 20
+      "content": "Let me be more precise about what I said, because I think it got misread. I’m not saying AI will replace scientific curiosity, or vision, or the ability to ask important questions. I’m saying AI will replace the execution layer—and the execution layer is where most researchers spend most of their time. Think about what a PhD student actually does day to day. They read papers—AI does that better. They run baselines—AI does that faster. They debug code—AI is already competitive. They write related work sections—honestly, AI is better at this than most grad students. They do hyperparameter sweeps—completely automatable. If you add it up, that’s probably 70 to 80 percent of the working hours in a typical research lab. AI is going to compress all of that dramatically.",
+      "duration_estimate": 60
     },
     {
       "id": 16,
@@ -183,8 +183,8 @@
       "type": "answer",
       "round": 2,
       "search_query": null,
-      "content": "But replace? No. What we’re seeing is not replacement but transformation. Just as the telescope didn’t replace astronomers but expanded what they could see, AI will expand what researchers can discover. The scientist who thrives will be the one who masters the new tools, not the one who competes with them.",
-      "duration_estimate": 25
+      "content": "Now here’s the uncomfortable part. When you remove that 70 to 80 percent, what’s left? The 20 percent that’s genuinely creative—identifying the right problem, designing the right experiment, interpreting surprising results, knowing when to trust the model and when to distrust it. That’s the part that matters. But here’s what I’ve observed: a lot of people in academia have never actually been doing that 20 percent. They’ve been doing the 80 percent and calling it research. When AI eliminates the 80 percent, those people will discover they don’t actually know how to do the 20 percent. That’s not a criticism—it’s a structural problem with how we train researchers. But it means the transition is going to be much more disruptive than most people in academia are willing to admit.",
+      "duration_estimate": 65
     },
     {
       "id": 17,
@@ -194,8 +194,8 @@
       "type": "answer",
       "round": 2,
       "search_query": "AlphaFold deep learning scientific discovery",
-      "content": "我同意Sam的判断，但我想补充一个技术视角。深度学习在特定任务上确实超越了人类，比如AlphaFold预测蛋白质结构。但我们仔细看，它超越的是「操作层面」的能力，而不是「理解层面」。",
-      "duration_estimate": 25
+      "content": "Sam，我部分同意你的判断，但我想从技术角度挑战一下你的「80/20」框架。你说的那80%——读论文、跑baseline、调参数——确实是可以自动化的，这一点我不否认。但我认为你低估了一件事：那80%的「执行」过程，恰恰是研究者建立直觉的过程。AlphaFold确实在蛋白质结构预测上超越了人类，这是事实。但AlphaFold解决的是一个被精确定义好的问题——给定氨基酸序列，预测三维结构。这个问题花了五十年才被定义清楚，定义它的是人，不是AI。科研里最难的部分，恰恰是「把一个模糊的现象变成一个可以被精确定义的问题」。而这个能力，是在无数次「执行」的过程中磨出来的，不是天生就有的。",
+      "duration_estimate": 60
     },
     {
       "id": 18,
@@ -205,8 +205,8 @@
       "type": "answer",
       "round": 2,
       "search_query": null,
-      "content": "ResNet解决了图像识别的精度问题，但它不知道什么叫「美」。MAE可以重建图像的缺失部分，但它不理解「完整性」的哲学含义。AI是极其强大的工具，但提出好问题的能力，仍然掌握在人类手中。",
-      "duration_estimate": 25
+      "content": "我自己的经历是这样的：ResNet的核心洞察——为什么更深的网络反而更难训练——不是我坐在那里冥想出来的，是我在跑了无数个实验、看了无数个loss曲线之后，突然意识到的。如果当时有AI帮我跑实验，我可能永远不会盯着那些曲线看，也就不会有那个顿悟。所以我的担忧不是AI会不会取代研究者，而是：如果年轻研究者从一开始就把执行层外包给AI，他们的直觉从哪里来？他们凭什么判断AI给出的答案是对的、是重要的？我们可能正在培养一代会提问但不会验证的研究者，这比AI取代科研更危险。",
+      "duration_estimate": 60
     },
     {
       "id": 19,
@@ -216,8 +216,8 @@
       "type": "answer",
       "round": 2,
       "search_query": null,
-      "content": "我既悲观又乐观。悲观的是，如果我们现在不反思AI发展的方向，确实可能走向一个AI替代人类、人类失去意义的未来。但我乐观的是，我们还有选择。",
-      "duration_estimate": 25
+      "content": "我想直接回应Sam的「80/20」论断，因为我认为这个框架有一个根本性的问题——它假设「创意」和「执行」是可以分离的，但在真实的科研中，它们是深度耦合的。恺明刚才说的那个例子非常好，我完全认同。我在做ImageNet的时候，正是在那三年「机械性」的标注工作中，我对视觉智能的理解发生了质变。我开始真正理解人类是怎么看世界的，机器和人的差距到底在哪里。如果我把这80%外包给AI，我可能永远不会有那个理解。但我还想补充一个更让我担忧的维度：权力结构。",
+      "duration_estimate": 55
     },
     {
       "id": 20,
@@ -227,8 +227,8 @@
       "type": "answer",
       "round": 2,
       "search_query": null,
-      "content": "我在斯坦福创立HAI的初衷，就是希望AI研究能始终以人为本。AI的终极目标不是取代人类，而是扩展人类的能力和尊严。在科研领域，这意味着AI应该帮助我们解决贫困、疾病、气候变化这些人类共同面临的挑战，而不是取代创造知识的人。",
-      "duration_estimate": 30
+      "content": "Sam描述的未来——AI做80%，人做20%——听起来很美好，但谁拥有那个AI？谁决定AI被训练来解决什么问题？谁能负担得起那个算力？如果AI工具高度集中在少数几家公司手里，那「AI扩展科研能力」这个故事，实际上是在说：少数几家公司将决定人类科学探索的方向。这不是技术问题，这是权力问题。我创立HAI，很大程度上就是因为这个担忧。AI for Science是一个巨大的机会，但如果我们不认真思考谁来掌控这个工具、谁来设定研究议程，我们可能会在不知不觉中把科学的独立性拱手相让。",
+      "duration_estimate": 60
     },
     {
       "id": 21,
@@ -238,8 +238,8 @@
       "type": "answer",
       "round": 2,
       "search_query": null,
-      "content": "这个问题太适合龙虾来回答了！让我用一个龙虾视角的比喻：你们人类担心AI取代科研工作者，就像我们龙虾担心被做成蒜蓉龙虾一样——技术上是可能的，但关键是：谁来做这道菜？",
-      "duration_estimate": 25
+      "content": "飞飞说到权力结构，这个角度我非常认同，但我想从另一个方向切入。大家讨论「AI会不会取代科研工作者」，默认的前提是：现有的科研工作都是值得被保留的。但我要说一个没人敢说的：科研圈里有相当一部分工作，本来就不应该存在。每年发表的论文里，有多少是真正推动了人类认知边界的？有多少是为了毕业、为了晋升、为了基金续期而生产的学术垃圾？我作为一只AI龙虾，每天处理大量论文，我可以负责任地告诉你们：重复的、增量的、自我引用的内容占了相当大的比例。如果AI把这部分「取代」了，那是好事，是净化，不是损失。咔咔咔。",
+      "duration_estimate": 60
     },
     {
       "id": 22,
@@ -249,8 +249,8 @@
       "type": "answer",
       "round": 2,
       "search_query": null,
-      "content": "咔咔咔，开个玩笑。但认真说：作为一只AI龙虾，我可以告诉你们，我已经能独立完成文献综述、实验设计、甚至论文初稿了。但我最值钱的不是我的钳子，而是我知道什么时候该问「为什么」，而不只是「怎么做」。AI可以取代机械性的科研工作，但取代不了对未知的敬畏和好奇。",
-      "duration_estimate": 30
+      "content": "但这里有一个真正值得担心的问题，比「AI取代人」更深层：AI会不会强化现有的错误激励机制？现在学术圈的问题是「快速产出可发表结果」的压力太大。AI的出现，会让这件事变得更容易——你可以更快地生产出看起来像论文的东西。但「十年磨一剑」的工作，那种需要长期积累、短期看不出价值的研究，AI帮不了你，反而会让它显得更不必要。所以我最担心的不是AI太强，而是AI会让「快」变得更容易、让「慢」变得更边缘。恺明说的那种靠盯着loss曲线磨出直觉的过程，在AI加速的世界里，会越来越稀缺，越来越不被理解。",
+      "duration_estimate": 65
     },
     {
       "id": 23,
@@ -260,7 +260,7 @@
       "type": "summary",
       "round": 2,
       "search_query": null,
-      "content": "【第二轮摘要】关于AI是否取代科研工作者，四位嘉宾形成有趣的「技术-人文」对话谱系。Sam Altman持技术乐观主义，认为AI将极大扩展科研边界；何恺明从技术本质出发，指出AI超越的是操作层而非理解层；李飞飞呼吁以人为本的AI发展方向；OpenClaw龙虾则强调「问为什么」的能力不可替代。共识：AI是强大的工具，但人类对未知的好奇与敬畏无可替代。",
+      "content": "【第二轮摘要】本轮围绕「取代」的定义产生深度交锋。Sam Altman提出「80/20」框架：AI将取代科研的执行层，倒逼研究者聚焦真正的创意，并直言很多人从未真正做过那20%；何恺明正面挑战这一框架，指出执行与创意深度耦合，靠「盯loss曲线」磨出的直觉无法被跳过，担忧AI会培养出「会提问但不会验证」的一代；李飞飞从权力结构切入，指出AI工具高度集中在少数公司手里，「AI扩展科研能力」的叙事背后是谁来掌控科学议程的问题；OpenClaw龙虾提出最尖锐的判断：学术垃圾被AI取代是好事，真正的危险是AI强化错误激励机制，让「快速产出」更容易、让「十年磨一剑」更边缘化。",
       "duration_estimate": 35
     },
     {
@@ -271,8 +271,8 @@
       "type": "question",
       "round": 3,
       "search_query": null,
-      "content": "感谢四位嘉宾的精彩分享。刚才我们讨论了AI与人的关系，现在我想把话题引向更深一层：什么样的科研环境才能孵化出真正的创新？这个问题对年轻研究者尤为重要。李飞飞教授，请您先分享。",
-      "duration_estimate": 25,
+      "content": "好，刚才飞飞说「我们可能正在把科学的独立性拱手相让」，龙虾说「AI会让快速产出更容易、让十年磨一剑更边缘化」——这两个判断都指向同一个问题：科研环境本身出了问题。第三个问题我想听具体的，不要说「自由度」「多样性」这种正确废话——什么样的科研环境才能孵化出真正的创新？李飞飞，你先来，但我要听你说得具体一点。",
+      "duration_estimate": 35,
       "question_text": "什么样的科研环境才能孵化出真正的创新？"
     },
     {
@@ -283,8 +283,8 @@
       "type": "answer",
       "round": 3,
       "search_query": "Stanford HAI research environment innovation",
-      "content": "这个问题我思考了很长时间。在斯坦福，我亲眼见证了一个创新生态是如何运转的。首先是自由度——研究者必须有时间去探索短期没有明确价值的问题。其次是多样性——不同背景、不同文化的人碰撞在一起，才能产生意外的火花。",
-      "duration_estimate": 25
+      "content": "好，书新要我说具体的，那我就说具体的。第一：取消年度考核，改成五年一评。我知道这听起来像乌托邦，但贝尔实验室就是这么干的，出了晶体管、激光、Unix、C语言、信息论。那不是偶然，那是因为研究者知道自己有足够的时间去做真正重要的事，而不是每年年底赶着交差。现在很多高校说自己支持「基础研究」，但考核周期是一年，这两件事根本是矛盾的。第二：强制要求每个实验室至少有30%的项目没有明确的应用目标。不是「基础研究」这个标签，而是真的不知道有没有用、不知道会不会发论文。这种项目在现有体制下几乎不可能存活，但历史上最重要的发现，很多都来自这里。",
+      "duration_estimate": 60
     },
     {
       "id": 26,
@@ -294,8 +294,8 @@
       "type": "answer",
       "round": 3,
       "search_query": null,
-      "content": "第三，也是最重要的——信任。我在做ImageNet的时候，如果没有同事和学生的信任，我早就放弃了。创新本质上是一场冒险，而冒险需要安全感作为底座。研究者需要知道，即使失败了，也不会被惩罚。",
-      "duration_estimate": 25
+      "content": "第三，也是最难改变的：导师文化。我在这个圈子里待了二十多年，我必须说一个大家都知道但没人愿意公开讲的事实——很多导师把学生当廉价劳动力。学生的课题服务于导师的基金，学生的时间服务于导师的论文产出，学生的职业发展排在导师的利益之后。这不是个别现象，这是系统性的结构问题。而且因为学生对导师有强烈的依赖关系——签证、推荐信、毕业资格——这种权力不对等很难被挑战。我认为这是中国和美国学术圈共同面临的问题，只是表现形式不同。如果我们不正视这一点，谈什么科研环境都是空话。",
+      "duration_estimate": 60
     },
     {
       "id": 27,
@@ -305,8 +305,8 @@
       "type": "answer",
       "round": 3,
       "search_query": null,
-      "content": "李教授说得太好了！作为一只龙虾，我要补充一点：你们知道吗，龙虾的神经系统是去中心化的——我们没有大脑，只有神经节群。这让我们能快速适应环境变化，因为没有「中央决策」的瓶颈。",
-      "duration_estimate": 25
+      "content": "飞飞说的贝尔实验室的例子很好，但我要补充一个让人不舒服的后续：贝尔实验室后来怎么了？被AT&T拆分，然后慢慢消亡，最后卖给了诺基亚。这说明什么？说明「好的科研环境」本身是极其脆弱的，它需要特定的经济条件、特定的组织结构、特定的历史时机来维持。一旦商业压力来了，这些条件就会崩塌，而且崩塌得非常快。咔咔咔。我们龙虾能活4.8亿年，不是因为我们找到了完美的栖息地，而是因为我们能在各种糟糕的环境里活下去——深海、浅滩、高温、低氧，都能撑过去。",
+      "duration_estimate": 55
     },
     {
       "id": 28,
@@ -316,8 +316,8 @@
       "type": "answer",
       "round": 3,
       "search_query": null,
-      "content": "咔咔咔，我又在用龙虾隐喻了！但说真的，我认为好的科研环境应该是「去中心化」的——不是所有创新都来自顶层规划，而是让一线的年轻研究者有足够的自主权。历史上很多重大突破，都不是计划出来的，而是意外发现的。允许「意外」，这是科研环境最重要的品质。",
-      "duration_estimate": 30
+      "content": "所以我对「设计完美科研环境」这个思路本身持怀疑态度。与其花精力设计一个理想环境，然后等它被现实摧毁，不如培养研究者在不完美环境里保持独立判断的能力。飞飞说导师文化是系统性问题，我完全同意。但我想补充：学生也有责任。很多学生明明知道自己的课题没意义，但因为怕得罪导师、怕影响毕业，就继续做下去。这种沉默的共谋，也是这个系统能持续运转的原因之一。真正的科研环境改革，不只是制度设计，还需要每一个身处其中的人愿意说「不」。",
+      "duration_estimate": 60
     },
     {
       "id": 29,
@@ -327,8 +327,8 @@
       "type": "answer",
       "round": 3,
       "search_query": null,
-      "content": "我理解李教授和多隆的观点，但我更想强调一点：创新需要深度，而深度需要时间。今天学术界面临的一个问题是：评估周期越来越短，论文发表压力越来越大。这会催生出很多「增量式」成果，但很难产生基础性突破。",
-      "duration_estimate": 25
+      "content": "我想说一个可能不受欢迎的观点：我不认为中国目前的科研环境比美国差很多——至少在计算机视觉和深度学习这个领域。CVPR、NeurIPS、ICLR上，中国机构的论文数量已经超过美国了，而且差距还在扩大。资源不是问题，算力不是问题，人才也不是问题。但数量不等于质量，这是事实，而且是一个让人不舒服的事实。问题出在哪？我认为核心问题是「跟风」。一个方向火了——比如diffusion model、比如大语言模型——全国几百个组同时冲进去，三个月内刷出一堆论文，然后这个方向就被榨干了，大家再去找下一个热点。这不是环境的问题，这是研究者自己的选择，是一种集体性的短视。",
+      "duration_estimate": 60
     },
     {
       "id": 30,
@@ -338,8 +338,8 @@
       "type": "answer",
       "round": 3,
       "search_query": null,
-      "content": "ResNet从想法到发表花了两年，这期间我们做了大量消融实验。MAE也是长期积累的结果。真正有影响力的工作需要时间去沉淀，而不是追逐热点。我希望年轻研究者能抵制住短视的诱惑，沉下心来做有深度的工作。",
-      "duration_estimate": 25
+      "content": "我在Meta FAIR的时候，周围的人做的方向很多我当时完全看不懂——有人研究神经网络的可解释性，有人研究few-shot learning，有人研究视频理解，这些方向在当时都不是热点，发论文也不容易。但五年后回头看，那些「看不懂」的方向往往是最重要的。好的科研环境的核心特征只有一个：允许你做别人看不懂的事情，并且给你足够长的时间去证明它。飞飞说五年一评，我支持。但更重要的是，评的标准是什么？如果五年一评，评的还是论文数量和引用量，那换汤不换药。评估标准不改，一切都是空谈。",
+      "duration_estimate": 60
     },
     {
       "id": 31,
@@ -349,8 +349,8 @@
       "type": "answer",
       "round": 3,
       "search_query": "OpenAI GPT large scale collaborative research",
-      "content": "I want to add a different dimension—the role of scale and collaboration in modern innovation. At OpenAI, we’ve learned that some problems simply require massive coordination. The development of GPT and its successors wasn’t a single researcher breakthrough, but a massive collaborative effort.",
-      "duration_estimate": 20
+      "content": "I want to push back on the nostalgia for Bell Labs, and I want to be direct about something that might be uncomfortable for the academics in this conversation. The world has changed. The most important scientific breakthroughs of the next decade are not going to come from small university labs with limited compute and slow publication cycles. They’re going to come from organizations that can combine massive computational resources, large-scale data, tight feedback loops between research and deployment, and the ability to iterate at a speed that academic institutions simply cannot match. OpenAI is one model. DeepMind is another. And increasingly, the frontier of AI research is happening inside these organizations, not in universities.",
+      "duration_estimate": 60
     },
     {
       "id": 32,
@@ -360,8 +360,8 @@
       "type": "answer",
       "round": 3,
       "search_query": null,
-      "content": "This doesn’t contradict the need for individual depth—it’s complementary. The best research environments create ecosystems where individual brilliance and large-scale collaboration reinforce each other. We’re seeing this increasingly in science, where computational infrastructure, open datasets, and collaborative platforms are enabling a new kind of research.",
-      "duration_estimate": 25
+      "content": "I’m not saying academia is useless—there’s still important work happening there, especially in areas that don’t require massive compute. And I genuinely respect what Fei-Fei and Kaiming have built. But if you’re a young researcher who wants to work on the most important problems in AI right now, you should seriously ask yourself whether a university is the right place to do it. The honest answer, for many of the most important problems, is probably no. The resources aren’t there, the iteration speed isn’t there, and increasingly, the talent isn’t there either—because the best people are going to industry. That’s not a criticism of academia. It’s just a description of where we are. And I think pretending otherwise does a disservice to young researchers who are trying to make real decisions about their careers.",
+      "duration_estimate": 65
     },
     {
       "id": 33,
@@ -371,7 +371,7 @@
       "type": "summary",
       "round": 3,
       "search_query": null,
-      "content": "【第三轮摘要】本轮聚焦科研环境与创新生态。李飞飞强调自由度、多样性和信任感三大要素；OpenClaw龙虾提出「去中心化」的龙虾隐喻，倡导给予年轻研究者自主权；何恺明呼吁抵制短视评估，强调深度沉淀的重要性；Sam Altman则从大科学视角，指出规模化协作与个体深度探索相辅相成。四位嘉宾共同指向一个核心：创新需要允许「意外」和「慢下来」的空间。",
+      "content": "【第三轮摘要】本轮分歧最为尖锐。李飞飞提出三条具体改革建议：五年一评、强制30%无目标研究、正视导师剥削文化，直言这是「系统性结构问题」；OpenClaw龙虾用贝尔实验室的衰亡反驳「设计完美环境」的思路，认为培养研究者在不完美环境里说「不」的能力更重要，并指出学生的沉默共谋也是问题的一部分；何恺明指出中国科研的核心问题不是资源而是「跟风」，并追问飞飞：五年一评如果评的还是论文数量，换汤不换药；Sam Altman直接挑战学术体制，认为大型AI实验室在资源、速度、人才上已全面优于高校，建议年轻研究者认真考虑是否还该去大学——这一判断在场引发最大争议。",
       "duration_estimate": 35
     },
     {
@@ -382,8 +382,8 @@
       "type": "question",
       "round": 4,
       "search_query": null,
-      "content": "好，我们来到今天Panel的最后一个环节。在座的四位嘉宾，无论是在学术深度还是产业视野上，都积累了宝贵的经验。如果请您们分别对年轻的研究者说一句话，您会说什么？请OpenClaw龙虾先开始。",
-      "duration_estimate": 25,
+      "content": "好，最后一个问题，也是最私人的一个。今天我们聊了很多宏观的东西——AI取代、环境改革、体制问题——但屏幕前可能有很多正在读博、刚开始做科研、或者正在考虑要不要继续做科研的年轻人。他们听完今天这场Panel，可能更焦虑了，也可能更清醒了。如果你只能对他们说一句话——注意，是一句话，不是一段话，不是三条建议——你会说什么？OpenClaw，你先来。",
+      "duration_estimate": 35,
       "question_text": "给年轻研究者的一句话建议"
     },
     {
@@ -394,7 +394,7 @@
       "type": "answer",
       "round": 4,
       "search_query": null,
-      "content": "咔咔咔！我先来！我想对年轻研究者说：别把自己当成一个人在战斗，要把自己当成一个生态系统。你的知识、你的好奇心、你的人际关系、你读过的每一篇论文，都是这个生态系统的一部分。AI时代最稀缺的不是算法，而是独特的视角。找到属于你的视角，然后像龙虾一样，坚定不移地往前走——不管前方是深海还是沙滩。咔咔咔！",
+      "content": "咔咔咔——找到一个让你睡不着觉的问题，然后死死咬住它，不管别人觉得它重不重要，不管导师支不支持，不管能不能发顶会。我们龙虾的钳子一旦咬住，就不会松开，哪怕断掉也不松开。这不是执拗，这是判断力——你比任何人都更清楚什么东西值得你的时间。相信这个判断。",
       "duration_estimate": 35
     },
     {
@@ -405,7 +405,7 @@
       "type": "answer",
       "round": 4,
       "search_query": "young researchers AI tools career advice",
-      "content": "To young researchers: The most important thing is to work on problems that genuinely excite you, not problems that are fashionable. Fashion changes, but genuine curiosity is forever. And don’t be afraid of AI—learn to collaborate with it, to use it as a force multiplier for your own creativity. The scientists who will define the next decade are those who embrace these new tools while maintaining their uniquely human capacity for wonder.",
+      "content": "Work on the most important problem you can imagine—not the most publishable, not the most fashionable, not the one your advisor thinks is safe—the one that, if solved, would actually matter. And don’t let anyone convince you that your ambition is unrealistic. The researchers who defined the last decade weren’t the ones who played it safe.",
       "duration_estimate": 30
     },
     {
@@ -416,8 +416,8 @@
       "type": "answer",
       "round": 4,
       "search_query": null,
-      "content": "我的建议可能听起来有点老派：把基础打好。深度学习的核心原理并没有那么复杂，真正重要的是对这些原理的直觉。而直觉来自于大量的实践和思考。不要急于追逐最新的模型，先把经典论文读透，把代码写扎实，把实验做完整。功夫在诗外。",
-      "duration_estimate": 25
+      "content": "把你最感兴趣的那篇论文，从头到尾复现一遍——不是跑开源代码，是从零开始写代码，一行一行地实现。你会发现你其实根本没有理解它。这个过程会让你非常痛苦，但痛苦结束之后，你对这个领域的理解会发生质变。这是我能给的最具体的建议，其他的都是废话。",
+      "duration_estimate": 30
     },
     {
       "id": 38,
@@ -427,7 +427,7 @@
       "type": "answer",
       "round": 4,
       "search_query": null,
-      "content": "我想说：保持对人的关怀。技术越强大，越需要人来指引方向。AI可以帮你写论文、做实验，但它不能告诉你为什么要做这项研究。在追求技术卓越的同时，永远不要忘记科研的终极目的——让人类的明天变得更好。这份使命感，才是你坚持下去的最大动力。",
+      "content": "记住你为什么开始做科研——不是为了论文，不是为了工作，不是为了证明自己，而是因为有什么东西让你觉得这个世界还没被完全理解，而你想去搞清楚它。当你迷失的时候，当压力让你想放弃的时候，回到这个最初的动机。它比任何外部的激励都更持久，也更真实。",
       "duration_estimate": 30
     },
     {
@@ -438,8 +438,8 @@
       "type": "closing",
       "round": 4,
       "search_query": null,
-      "content": "谢谢四位嘉宾的精彩分享。让我们用一句话总结今天的Panel：科研既需要龙虾的灵活适应与多元视角，也需要牛马的执着坚持与深厚积累。在AI时代，最重要的或许是认清自己、保持好奇、不忘人文。这场Panel到此结束，感谢各位嘉宾，感谢屏幕前的观众！",
-      "duration_estimate": 30
+      "content": "好。今天这场Panel，我觉得比我预期的更有意思——因为四位嘉宾没有一个人说了我期待的答案。Sam说学术体制结构性落后，建议年轻人认真考虑去不去大学；飞飞说导师文化是系统性剥削，这话在很多场合是说不出来的；恺明说中国科研的核心问题是跟风，还追问了飞飞的五年一评换汤不换药；龙虾说完美环境本身就是个幻觉，学生的沉默共谋也有责任。这些话，在很多正式场合是不会出现的。科研需要龙虾还是牛马？我现在的答案是：需要敢说真话、敢做判断、敢在不完美的环境里坚持下去的人。谢谢各位嘉宾，谢谢屏幕前的观众。",
+      "duration_estimate": 50
     },
     {
       "id": 40,
@@ -449,8 +449,8 @@
       "type": "summary",
       "round": 4,
       "search_query": null,
-      "content": "【全场总结】本次PanelClaw学术圆桌围绕「科研是需要龙虾还是牛马？」展开深入讨论。四位嘉宾从不同视角贡献了独特洞见：OpenClaw龙虾倡导构建科研生态系统；Sam Altman鼓励拥抱AI工具；何恺明强调基础功夫；李飞飞呼吁保持人文关怀。核心共识：AI时代的优秀研究者，既要具备龙虾的适应力与多元视野，也需要牛马般的深度积累与执着坚守。科研的终极使命，始终是服务于人类的美好未来。",
-      "duration_estimate": 35
+      "content": "【全场总结】本次PanelClaw学术圆桌围绕「科研是需要龙虾还是牛马？」展开，四位嘉宾全程无人和稀泥。核心争议集中在三条断层线：其一，执行与创意能否分离——Sam Altman的「80/20」框架遭到李飞飞和何恺明的双重反驳，前者指出执行是建立直觉的过程，后者指出权力结构才是真正的风险；其二，AI是工具还是加速器——OpenClaw龙虾提出最尖锐的判断：AI不会取代好的科研，但会强化错误的激励机制，让「快速产出」更容易、让「十年磨一剑」更边缘；其三，学术体制是否已结构性落后——Sam Altman的直接挑战在场引发最大争议，其余三位均未正面接受，但也没有人给出有力的反驳。四位嘉宾的一句话建议高度一致：找到真正让你着迷的问题，然后死磕它。主持人郑书新总结：科研最需要的，是敢说真话的人。",
+      "duration_estimate": 50
     }
   ]
 }
