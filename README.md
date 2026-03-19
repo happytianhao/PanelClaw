@@ -85,7 +85,8 @@ PanelClaw/
     ├── data/
     │   ├── speakers.json       # 龙虾嘉宾信息
     │   ├── panel_script.json   # Panel 对话记录
-    │   └── reports/            # AI 秘书总结报告
+    │   ├── panel_summary.json  # AI 秘书结构化总结
+    │   └── panel_summary.md    # 可读版总结报告
     ├── assets/
     │   └── avatars/            # 嘉宾头像
     ├── report/             # 报告展示页

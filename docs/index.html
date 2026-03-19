@@ -123,6 +123,57 @@
       padding: 18px 0 10px;
       flex-wrap: wrap;
     }
+    /* ── SPEAKER BIO PANEL ── */
+    .speaker-bio-panel {
+      max-width: 680px;
+      margin: 0 auto 4px;
+      padding: 0 20px;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+    .speaker-bio-panel.visible {
+      max-height: 200px;
+      opacity: 1;
+    }
+    .speaker-bio-inner {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: var(--bg-card);
+      border-radius: 10px;
+      padding: 12px 14px;
+      border-left: 3px solid var(--accent);
+    }
+    .speaker-bio-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      background: var(--bg-main);
+    }
+    .speaker-bio-text { flex: 1; min-width: 0; }
+    .speaker-bio-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 2px;
+    }
+    .speaker-bio-title {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .speaker-bio-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
     .speaker-chip {
       display: flex;
       flex-direction: column;
@@ -131,6 +182,7 @@
       cursor: pointer;
       transition: transform 0.2s ease;
       user-select: none;
+      width: 64px;
     }
     .speaker-chip:hover { transform: translateY(-2px); }
     .speaker-avatar {
@@ -158,6 +210,7 @@
       letter-spacing: 0.4px;
       transition: color 0.3s;
       white-space: nowrap;
+      text-align: center;
     }
     /* ── CONVERSATION ── */
     .conversation-area { position: relative; }
@@ -469,6 +522,16 @@
     </div>
   </header>
   <div class="speaker-strip" id="speakerStrip"></div>
+  <div class="speaker-bio-panel" id="speakerBioPanel">
+    <div class="speaker-bio-inner">
+      <div class="speaker-bio-avatar" id="speakerBioAvatar"></div>
+      <div class="speaker-bio-text">
+        <div class="speaker-bio-name" id="speakerBioName"></div>
+        <div class="speaker-bio-title" id="speakerBioTitle"></div>
+        <div class="speaker-bio-desc" id="speakerBioDesc"></div>
+      </div>
+    </div>
+  </div>
   <div class="conversation-area" id="conversationArea">
     <div class="loading-state" id="loadingState">
       <div class="loading-ring"></div>
@@ -643,8 +706,23 @@ function renderSpeakerStrip() {
       <div class="speaker-avatar">${sp.avatar}</div>
       <span class="speaker-chip-label">${sp.name}</span>`;
     chip.addEventListener('click', () => {
-      const idx = scriptData.segments.findIndex(s => s.speaker_id === id && s.type === 'answer');
-      if (idx >= 0) jumpTo(idx);
+      const bioPanel = document.getElementById('speakerBioPanel');
+      const currentId = bioPanel.dataset.activeId;
+      if (currentId === id && bioPanel.classList.contains('visible')) {
+        bioPanel.classList.remove('visible');
+        bioPanel.dataset.activeId = '';
+      } else {
+        document.getElementById('speakerBioAvatar').textContent = sp.avatar;
+        document.getElementById('speakerBioName').textContent = sp.name + (sp.name_en && sp.name_en !== sp.name ? '  ' + sp.name_en : '');
+        document.getElementById('speakerBioTitle').textContent = sp.title + '  ·  ' + sp.affiliation;
+        document.getElementById('speakerBioDesc').textContent = sp.bio || '';
+        const inner = bioPanel.querySelector('.speaker-bio-inner');
+        inner.style.borderLeftColor = sp.color || 'var(--accent)';
+        bioPanel.dataset.activeId = id;
+        bioPanel.classList.add('visible');
+        const idx = scriptData.segments.findIndex(s => s.speaker_id === id && s.type === 'answer');
+        if (idx >= 0) jumpTo(idx);
+      }
     });
     speakerStrip.appendChild(chip);
   });

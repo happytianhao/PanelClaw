@@ -58,7 +58,7 @@
 ### 秘书
 
 - 身份：AI Panel 秘书（无需简历）
-- 职责：会后生成结构化总结报告，输出到 `docs/data/report.json`
+- 职责：会后生成结构化总结报告，输出到 `docs/data/panel_summary.json` 和 `docs/data/panel_summary.md`
 - speaker_id: `secretary`
 
 ---
@@ -102,12 +102,12 @@ Panel 共设 4 个核心问题，每题发言顺序固定。
 ```json
 [
   {
-    "speaker_id": "lifei",
+    "speaker_id": "lifeifei",
     "name": "李飞飞",
     "name_en": "Fei-Fei Li",
     "title": "Stanford 教授 / HAI 联合院长",
     "affiliation": "Stanford University",
-    "avatar": "assets/avatars/lifei.jpg",
+    "avatar": "assets/avatars/lifeifei.jpg",
     "language": "zh",
     "color": "#4A90D9"
   }
@@ -164,7 +164,7 @@ Panel 共设 4 个核心问题，每题发言顺序固定。
 | text | string | 发言正文 |
 | duration_estimate | number | 预估打字机播放时长（秒） |
 
-### `docs/data/report.json`
+### `docs/data/panel_summary.json`
 
 存储 AI 秘书生成的总结报告，一个 Panel 对应一个文件。
 
@@ -197,8 +197,9 @@ Panel 共设 4 个核心问题，每题发言顺序固定。
 
 1. 生成 `docs/data/speakers.json`：填写所有嘉宾信息
 2. 生成 `docs/data/panel_script.json`：按议程顺序逐段生成对话脚本
-3. 生成 `docs/data/report.json`：由 AI 秘书角色总结全场内容
-4. 验证 JSON 格式，确保所有 speaker_id 引用一致
+3. 生成 `docs/data/panel_summary.json`：由 AI 秘书角色总结全场内容
+4. 生成 `docs/data/panel_summary.md`：将 panel_summary.json 转为可读的 Markdown 总结文档
+5. 验证 JSON 格式，确保所有 speaker_id 引用一致
 
 ### Prompt 设计原则
 
@@ -225,7 +226,8 @@ PanelClaw/
     ├── data/
     │   ├── speakers.json       # 嘉宾信息
     │   ├── panel_script.json   # Panel 对话脚本
-    │   └── report.json         # AI 秘书总结报告
+    │   ├── panel_summary.json  # AI 秘书结构化总结
+    │   └── panel_summary.md    # 可读版总结报告
     ├── assets/
     │   └── avatars/            # 嘉宾头像
     ├── plans/              # 项目规划文档
@@ -242,7 +244,8 @@ PanelClaw/
 
 - [ ] 创建 `docs/data/speakers.json`（6 位嘉宾 + 秘书）
 - [ ] 生成 `docs/data/panel_script.json`（4 个问题，完整对话）
-- [ ] 生成 `docs/data/report.json`（AI 秘书总结）
+- [ ] 生成 `docs/data/panel_summary.json`（AI 秘书结构化总结）
+- [ ] 生成 `docs/data/panel_summary.md`（可读版总结报告）
 - [ ] 创建 `docs/index.html`（打字机播放器主页面）
 - [ ] 添加嘉宾头像资源到 `docs/assets/avatars/`
 - [ ] 实现进度条拖拽跳转功能
@@ -267,7 +270,7 @@ PanelClaw/
 
 ### 跨文档一致性原则
 
-- `speaker_id` 必须在 `speakers.json`、`panel_script.json`、`report.json` 中保持完全一致
+- `speaker_id` 必须在 `speakers.json`、`panel_script.json`、`panel_summary.json` 中保持完全一致
 - 嘉宾姓名、职位描述在所有文件中保持统一，以本文件为准
 - Panel 议程顺序以本文件"Panel 议程"章节为准，生成脚本时严格遵守
 
@@ -281,7 +284,7 @@ PanelClaw/
 
 - 先生成 `speakers.json`，再生成 `panel_script.json`，顺序不可颠倒
 - 每个 segment 生成后立即验证 speaker_id 是否存在于 speakers.json
-- `report.json` 生成必须在脚本生成完成后进行
+- `panel_summary.json` 生成必须在脚本生成完成后进行
 
 ### 前端开发时
 

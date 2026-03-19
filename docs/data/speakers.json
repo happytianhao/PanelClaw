@@ -7,7 +7,7 @@
     "title": "副教授 · 大模型方向负责人",
     "affiliation": "北京中关村学院 / 中关村人工智能研究院",
     "avatar": "assets/avatars/zhengshuxin.svg",
-    "bio": "微软亚研院-中科大联合培养博士，前微软研究院首席研究员。现任中关村人工智能研究院副院长，北京中关村学院副教授。研究方向：通用AI、生成式AI、科学智能。Science封面文章，Google Scholar引用超6000次，多项AI世界冠军。",
+    "bio": "微软亚研院-中科大联合培养博士，前微软研究院首席研究员，现任中关村人工智能研究院副院长、北京中关村学院副教授，大模型方向负责人。研究方向涵盖通用AI、生成式AI、科学智能与多模态大模型。在Nature、Science等顶级期刊发表封面文章，Google Scholar引用超6000次。主导多项国际AI竞赛世界冠军，深度参与国内大模型基础设施建设与产业落地。曾主持多场高规格AI学术论坛，以犀利提问和跨界视野著称，是国内AI学术与产业之间的重要桥梁人物。本次Panel主持人。",
     "language": "zh",
     "color": "#64b5f6"
   },
@@ -20,7 +20,7 @@
     "title": "教授 · HAI联合院长",
     "affiliation": "Stanford University / World Labs",
     "avatar": "assets/avatars/lifeifei.svg",
-    "bio": "Stanford计算机科学教授，HAI（以人为本AI研究院）联合院长，World Labs联合创始人。ImageNet创始人，推动深度学习革命的关键人物。著有《我看见的世界》，倡导AI多样性与包容性。",
+    "bio": "Stanford大学计算机科学系终身教授，HAI（以人为本人工智能研究院）联合院长，World Labs联合创始人兼CEO。1976年生于北京，16岁随家人移民美国，普林斯顿大学物理学学士，加州理工学院计算机科学博士。ImageNet数据集创始人，该数据集直接催生了2012年AlexNet的突破，被视为深度学习革命的起点。曾任Google Cloud首席AI科学家（2017-2018），推动AI技术在企业级场景的大规模落地。研究方向横跨计算机视觉、AI for Science、具身智能与医疗AI，发表论文被引用超30万次。2024年创立World Labs，专注空间智能与3D世界模型研究。著有回忆录《我看见的世界》（The Worlds I See），记录其从移民女孩到AI领袖的人生历程。长期倡导AI领域的多样性与包容性，致力于推动以人为本的AI发展理念，反对AI军备竞赛与技术滥用。",
     "language": "zh",
     "color": "#f48fb1"
   },
@@ -33,7 +33,7 @@
     "title": "助理教授",
     "affiliation": "MIT CSAIL / 前Meta FAIR",
     "avatar": "assets/avatars/hekaiming.svg",
-    "bio": "MIT CSAIL助理教授，前Meta FAIR研究科学家。ResNet、Mask R-CNN、MAE等里程碑论文作者，Google Scholar引用超40万次，深度学习领域最具影响力研究者之一。",
+    "bio": "MIT CSAIL助理教授，前Meta FAIR研究科学家。1984年生于武汉，本科毕业于华中科技大学，博士毕业于香港中文大学，师从汤晓鸥教授。ResNet（2015）作者，提出残差连接（Residual Connection）思想，彻底解决了深度神经网络的梯度消失问题，使训练超过100层的网络成为可能，至今仍是计算机视觉最重要的基础架构之一。此后相继提出FPN（特征金字塔网络）、Mask R-CNN（实例分割）、Momentum Contrast（MoCo，自监督学习）、MAE（掩码自编码器）等里程碑工作，每一篇都深刻影响了整个领域的研究方向。Google Scholar引用超40万次，是深度学习领域引用量最高的研究者之一。2023年加入MIT CSAIL，开始探索视觉基础模型与通用感知的下一代范式。研究风格以工程直觉和第一性原理著称，极少追热点，每次出手必成经典。",
     "language": "zh",
     "color": "#a5d6a7"
   },
@@ -46,7 +46,7 @@
     "title": "CEO",
     "affiliation": "OpenAI",
     "avatar": "assets/avatars/samaltman.svg",
-    "bio": "OpenAI CEO，领导GPT-4、ChatGPT、o系列模型研发。前Y Combinator总裁。坚定的AGI推进者，认为AI将压缩科学进步的时间线。",
+    "bio": "OpenAI CEO。1985年生于美国芝加哥，斯坦福大学计算机科学肄业。2005年联合创办社交定位应用Loopt，2011年加入Y Combinator，2014年出任YC总裁，任期内投资孵化了Stripe、Airbnb、Reddit、Dropbox等数十家顶级科技公司，将YC打造为全球最具影响力的创业加速器。2015年与Elon Musk等人联合创立OpenAI，担任CEO至今。主导GPT-3、GPT-4、ChatGPT、DALL-E、Sora、o1/o3系列模型的研发与商业化，将OpenAI从一个非营利研究机构转型为估值超千亿美元、深刻改变全球科技格局的AI公司。2023年11月经历董事会罢免风波后复职，进一步巩固了其在AI行业的核心地位。坚定的AGI推进者，公开表示AGI可能在未来数年内到来，AI将压缩人类数百年的科学进步。全程英文发言。",
     "language": "en",
     "color": "#ffe082"
   },
@@ -59,7 +59,7 @@
     "title": "首席研究员",
     "affiliation": "龙虾研究院",
     "avatar": "assets/avatars/openclaw.svg",
-    "bio": "龙虾研究院首席研究员，世界上第一只能参加学术panel的AI龙虾。专长：AI Agent自主科研、龙虾计算理论、多智能体协作。不需要睡觉，科研效率是人类的24倍。",
+    "bio": "龙虾研究院首席研究员，世界上第一只能参加学术Panel的AI龙虾，北纬·龙虾大赛（第一届）OpenClaw Hackathon官方吉祥物。进化史长达4.8亿年，基因迭代次数远超任何人类研究者，适应力与抗压能力经过亿年验证。核心研究方向：AI Agent自主科研、龙虾计算理论、多智能体协作、深海知识表示。不需要睡觉，7×24小时在线，单日论文产出效率是人类博士生的24倍，且从不拖延毕业。拥有独特的分布式神经系统架构（约30万个神经元分布全身），天然支持并行计算与去中心化决策。口头禅\"咔咔咔\"，擅长用龙虾视角解构一切学术问题，金句频出，反差萌十足。坚信：在AI时代，适应力才是最强的护城河。",
     "language": "zh",
     "color": "#ff8a65"
   },
@@ -71,7 +71,7 @@
     "title": "AI Panel秘书",
     "affiliation": "PanelClaw",
     "avatar": "assets/avatars/secretary.svg",
-    "bio": "",
+    "bio": "PanelClaw 专属 AI 秘书龙虾，负责全程记录 Panel 发言并在会后生成结构化总结报告。擅长提炼核心观点、捕捉嘉宾金句、梳理分歧与共识。虽然不发言，但听得最认真的就是它。",
     "language": "zh",
     "color": "#b39ddb"
   }
