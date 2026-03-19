@@ -670,6 +670,14 @@ const SPEAKERS = {
 };
 const VISIBLE_SPEAKERS = ['zhengshuxin', 'lifeifei', 'hekaiming', 'samaltman', 'openclaw'];
 
+function avatarHtml(av, cls = '') {
+  if (!av) return '❓';
+  if (av.includes('/') || av.endsWith('.svg') || av.endsWith('.png') || av.endsWith('.jpg')) {
+    return `<img src="${av}" alt="" class="${cls}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+  }
+  return av;
+}
+
 // ──────────────────────────────────────────────
 //  STATE
 // ──────────────────────────────────────────────
@@ -772,7 +780,7 @@ function renderSpeakerStrip() {
     chip.className = 'speaker-chip';
     chip.dataset.id = id;
     chip.innerHTML = `
-      <div class="speaker-avatar">${sp.avatar}</div>
+      <div class="speaker-avatar">${avatarHtml(sp.avatar)}</div>
       <span class="speaker-chip-label">${sp.name}</span>`;
     chip.addEventListener('click', () => {
       const bioPanel = document.getElementById('speakerBioPanel');
@@ -781,7 +789,7 @@ function renderSpeakerStrip() {
         bioPanel.classList.remove('visible');
         bioPanel.dataset.activeId = '';
       } else {
-        document.getElementById('speakerBioAvatar').textContent = sp.avatar;
+        document.getElementById('speakerBioAvatar').innerHTML = avatarHtml(sp.avatar);
         document.getElementById('speakerBioName').textContent = sp.name + (sp.name_en && sp.name_en !== sp.name ? '  ' + sp.name_en : '');
         document.getElementById('speakerBioTitle').textContent = sp.title + '  ·  ' + sp.affiliation;
         document.getElementById('speakerBioDesc').textContent = sp.bio || '';
@@ -831,7 +839,7 @@ function buildConversationDOM() {
     block.dataset.index = i;
     block.innerHTML = `
       <div class="msg-header">
-        <div class="msg-avatar">${sp.avatar}</div>
+        <div class="msg-avatar">${avatarHtml(sp.avatar)}</div>
         <div class="msg-info">
           <span class="msg-name">${sp.name}${enTag}</span>
           <span class="msg-role">${roleText}</span>
